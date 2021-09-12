@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Data;
 using Server.Models.Users;
@@ -21,6 +22,7 @@ namespace Server.Api
                 try
                 {
                     var context = services.GetRequiredService<DataContext>();
+                    context.Database.Migrate();
                     var userManager = services.GetRequiredService<UserManager<User>>();
                     var roleManager = services.GetRequiredService<RoleManager<Role>>();
                     Seeder.Initialize(context, userManager, roleManager);

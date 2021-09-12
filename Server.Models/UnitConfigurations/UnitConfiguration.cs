@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace Server.Models.UnitConfigurations
 {
+    /// <summary>
+    /// Properties ending with ...Increment are used to define how much value the Hero unit will gain on each level.
+    /// Example:
+    ///     - BaseHP: 40
+    ///     - Level: 5
+    ///     - TotalHP: BaseHP + level*HPIncremenet = 40 + 5*10 = 40 + 50 = 90
+    /// </summary>
     public class UnitConfiguration
     {
         public int Id { get; set; }
@@ -11,31 +18,31 @@ namespace Server.Models.UnitConfigurations
 
         public Faction Faction { get; set; }
 
-        public int MovementPointsBase { get; set; }
+        public int MovementPoints { get; set; }
 
-        public int ActionPointsBase { get; set; }
+        public int ActionPoints { get; set; }
 
-        public int MinDamageBase { get; set; }
+        public int MinDamage { get; set; }
 
         public int MinDamageIncrement { get; set; }
 
-        public int MaxDamageBase { get; set; }
+        public int MaxDamage { get; set; }
 
         public int MaxDamageIncrement { get; set; }
 
-        public int HitpointsBase { get; set; }
+        public int Hitpoints { get; set; }
 
         public int HitpointsIncrement { get; set; }
 
-        public int ManaBase { get; set; }
+        public int Mana { get; set; }
 
         public int ManaIncrement { get; set; }
 
-        public int ArmorBase { get; set; }
+        public int Armor { get; set; }
 
         public int ArmorIncrement { get; set; }
 
-        public int EvasionBase { get; set; }
+        public int Evasion { get; set; }
 
         public AttackType AttackType { get; set; }
 
