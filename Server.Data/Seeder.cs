@@ -1,11 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using Server.Models.MapEntities;
 using Server.Models.UnitConfigurations;
 using Server.Models.Users;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Server.Data
 {
@@ -17,6 +19,13 @@ namespace Server.Data
         {
             List<User> users = new List<User>();
             List<UnitConfiguration> unitConfigurations = new List<UnitConfiguration>();
+            List<Ability> allAbilities = new List<Ability>();
+            Dictionary<CreatureType, List<string>> creatureAbilitiesConfig = new Dictionary<CreatureType, List<string>>()
+            {
+                { CreatureType.Paladin, new List<string>(){ "PLD_VS", "PLD_HOJ", "PLD_BL" } },
+                { CreatureType.Shaman, new List<string>(){ "RA" } },
+                { CreatureType.Troll, new List<string>(){ "NA" } }
+            };
 
             if (!_context.Users.Any())
             {
@@ -48,6 +57,19 @@ namespace Server.Data
                 _context.SaveChanges();
             }
 
+            if (!_context.Abilities.Any())
+            {
+                var json = File.ReadAllText("SeedData/Abilities.json");
+                allAbilities = JsonConvert.DeserializeObject<List<Ability>>(json);
+
+                foreach (var ability in allAbilities)
+                {
+                    _context.Add(ability);
+                }
+
+                _context.SaveChanges();
+            }
+
             if (!_context.UnitConfigurations.Any())
             {
                 var configsData = System.IO.File.ReadAllText("SeedData/UnitConfigurations.json");
@@ -55,12 +77,22 @@ namespace Server.Data
 
                 foreach (var config in unitConfigurations)
                 {
+                    var creatureAbilities = GetAbilities(allAbilities, creatureAbilitiesConfig, config.Type);
+                    config.Abilities = creatureAbilities;
                     _context.UnitConfigurations.Add(config);
                 }
 
                 _context.SaveChanges();
             }
+
         }
+
+        private static ICollection<Ability> GetAbilities(List<Ability> allAbilities, Dictionary<CreatureType, List<string>> creatureAbilitiesConfig, CreatureType creatureType)
+        {
+            var codes = creatureAbilitiesConfig[creatureType];
+            return allAbilities.Where(x => codes.Contains(x.Code)).ToList();
+        }
+
 
         private static void AddAdminUser(UserManager<User> _userManager, string username, string email)
         {

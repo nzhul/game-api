@@ -12,6 +12,12 @@ namespace Server.Models.UnitConfigurations
     /// </summary>
     public class UnitConfiguration
     {
+        public UnitConfiguration()
+        {
+            Abilities = new List<Ability>();
+            Upgrades = new List<Upgrade>();
+        }
+
         public int Id { get; set; }
 
         public CreatureType Type { get; set; }
@@ -60,12 +66,8 @@ namespace Server.Models.UnitConfigurations
 
         public int FoodCost { get; set; }
 
-        public ICollection<UnitConfigurationAbility> UnitConfigurationAbilitys { get; set; }
+        public virtual ICollection<Ability> Abilities { get; set; }
 
-        public ICollection<UnitConfigurationUpgrade> UnitConfigurationUpgrades { get; set; }
-
-        //public ICollection<Ability> Abilities { get; set; }
-
-        //public ICollection<Upgrade> Upgrades { get; set; }
+        public virtual ICollection<Upgrade> Upgrades { get; set; }
     }
 }

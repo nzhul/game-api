@@ -10,7 +10,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210911180923_init")]
+    [Migration("20210920065017_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,8 +18,23 @@ namespace Server.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("AbilityUnitConfiguration", b =>
+                {
+                    b.Property<string>("AbilitiesCode")
+                        .HasColumnType("text");
+
+                    b.Property<int>("UnitConfigurationsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AbilitiesCode", "UnitConfigurationsId");
+
+                    b.HasIndex("UnitConfigurationsId");
+
+                    b.ToTable("UnitConfigurationAbilities");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
@@ -145,27 +160,28 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("Server.Models.UnitConfigurations.Ability", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
 
-                    b.Property<int>("DamageAmount")
+                    b.Property<int>("ActionPointsCost")
                         .HasColumnType("integer");
 
-                    b.Property<int>("HealingAmount")
-                        .HasColumnType("integer");
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
-                    b.Property<bool>("IsHeroAbility")
-                        .HasColumnType("boolean");
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("text");
 
                     b.Property<int>("Levels")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Name")
+                    b.Property<int>("MovementPointsCost")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.Property<int>("ResourceCost")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Code");
 
                     b.ToTable("Abilities");
                 });
@@ -254,47 +270,15 @@ namespace Server.Data.Migrations
                     b.ToTable("UnitConfigurations");
                 });
 
-            modelBuilder.Entity("Server.Models.UnitConfigurations.UnitConfigurationAbility", b =>
-                {
-                    b.Property<int>("UnitConfigurationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("AbilityId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UnitConfigurationId", "AbilityId");
-
-                    b.HasIndex("AbilityId");
-
-                    b.ToTable("UnitConfigurationAbility");
-                });
-
-            modelBuilder.Entity("Server.Models.UnitConfigurations.UnitConfigurationUpgrade", b =>
-                {
-                    b.Property<int>("UnitConfigurationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UpgradeId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UnitConfigurationId", "UpgradeId");
-
-                    b.HasIndex("UpgradeId");
-
-                    b.ToTable("UnitConfigurationUpgrade");
-                });
-
             modelBuilder.Entity("Server.Models.UnitConfigurations.Upgrade", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("text");
 
                     b.Property<int>("GoldCost")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Name")
                         .HasColumnType("integer");
 
                     b.Property<int>("TimeCost")
@@ -303,7 +287,7 @@ namespace Server.Data.Migrations
                     b.Property<int>("WoodCost")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("Code");
 
                     b.ToTable("Upgrades");
                 });
@@ -561,6 +545,36 @@ namespace Server.Data.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
+            modelBuilder.Entity("UnitConfigurationUpgrade", b =>
+                {
+                    b.Property<int>("UnitConfigurationsId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpgradesCode")
+                        .HasColumnType("text");
+
+                    b.HasKey("UnitConfigurationsId", "UpgradesCode");
+
+                    b.HasIndex("UpgradesCode");
+
+                    b.ToTable("UnitConfigurationUpgrades");
+                });
+
+            modelBuilder.Entity("AbilityUnitConfiguration", b =>
+                {
+                    b.HasOne("Server.Models.UnitConfigurations.Ability", null)
+                        .WithMany()
+                        .HasForeignKey("AbilitiesCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.UnitConfigurations.UnitConfiguration", null)
+                        .WithMany()
+                        .HasForeignKey("UnitConfigurationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Server.Models.Users.Role", null)
@@ -595,44 +609,6 @@ namespace Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Server.Models.UnitConfigurations.UnitConfigurationAbility", b =>
-                {
-                    b.HasOne("Server.Models.UnitConfigurations.Ability", "Ability")
-                        .WithMany("UnitConfigurationAbilitys")
-                        .HasForeignKey("AbilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.UnitConfigurations.UnitConfiguration", "UnitConfiguration")
-                        .WithMany("UnitConfigurationAbilitys")
-                        .HasForeignKey("UnitConfigurationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ability");
-
-                    b.Navigation("UnitConfiguration");
-                });
-
-            modelBuilder.Entity("Server.Models.UnitConfigurations.UnitConfigurationUpgrade", b =>
-                {
-                    b.HasOne("Server.Models.UnitConfigurations.UnitConfiguration", "UnitConfiguration")
-                        .WithMany("UnitConfigurationUpgrades")
-                        .HasForeignKey("UnitConfigurationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.UnitConfigurations.Upgrade", "Upgrade")
-                        .WithMany("UnitConfigurationUpgrades")
-                        .HasForeignKey("UpgradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UnitConfiguration");
-
-                    b.Navigation("Upgrade");
                 });
 
             modelBuilder.Entity("Server.Models.Users.Friendship", b =>
@@ -699,21 +675,19 @@ namespace Server.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Server.Models.UnitConfigurations.Ability", b =>
+            modelBuilder.Entity("UnitConfigurationUpgrade", b =>
                 {
-                    b.Navigation("UnitConfigurationAbilitys");
-                });
+                    b.HasOne("Server.Models.UnitConfigurations.UnitConfiguration", null)
+                        .WithMany()
+                        .HasForeignKey("UnitConfigurationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("Server.Models.UnitConfigurations.UnitConfiguration", b =>
-                {
-                    b.Navigation("UnitConfigurationAbilitys");
-
-                    b.Navigation("UnitConfigurationUpgrades");
-                });
-
-            modelBuilder.Entity("Server.Models.UnitConfigurations.Upgrade", b =>
-                {
-                    b.Navigation("UnitConfigurationUpgrades");
+                    b.HasOne("Server.Models.UnitConfigurations.Upgrade", null)
+                        .WithMany()
+                        .HasForeignKey("UpgradesCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Server.Models.Users.Role", b =>

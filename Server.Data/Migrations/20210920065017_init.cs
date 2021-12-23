@@ -12,17 +12,17 @@ namespace Server.Data.Migrations
                 name: "Abilities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<int>(type: "integer", nullable: false),
-                    IsHeroAbility = table.Column<bool>(type: "boolean", nullable: false),
-                    Levels = table.Column<int>(type: "integer", nullable: false),
-                    HealingAmount = table.Column<int>(type: "integer", nullable: false),
-                    DamageAmount = table.Column<int>(type: "integer", nullable: false)
+                    Code = table.Column<string>(type: "text", nullable: false),
+                    DisplayName = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    ResourceCost = table.Column<int>(type: "integer", nullable: false),
+                    ActionPointsCost = table.Column<int>(type: "integer", nullable: false),
+                    MovementPointsCost = table.Column<int>(type: "integer", nullable: false),
+                    Levels = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Abilities", x => x.Id);
+                    table.PrimaryKey("PK_Abilities", x => x.Code);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,16 +149,15 @@ namespace Server.Data.Migrations
                 name: "Upgrades",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<int>(type: "integer", nullable: false),
+                    Code = table.Column<string>(type: "text", nullable: false),
+                    DisplayName = table.Column<string>(type: "text", nullable: true),
                     WoodCost = table.Column<int>(type: "integer", nullable: false),
                     GoldCost = table.Column<int>(type: "integer", nullable: false),
                     TimeCost = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Upgrades", x => x.Id);
+                    table.PrimaryKey("PK_Upgrades", x => x.Code);
                 });
 
             migrationBuilder.CreateTable(
@@ -351,50 +350,50 @@ namespace Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UnitConfigurationAbility",
+                name: "UnitConfigurationAbilities",
                 columns: table => new
                 {
-                    UnitConfigurationId = table.Column<int>(type: "integer", nullable: false),
-                    AbilityId = table.Column<int>(type: "integer", nullable: false)
+                    AbilitiesCode = table.Column<string>(type: "text", nullable: false),
+                    UnitConfigurationsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UnitConfigurationAbility", x => new { x.UnitConfigurationId, x.AbilityId });
+                    table.PrimaryKey("PK_UnitConfigurationAbilities", x => new { x.AbilitiesCode, x.UnitConfigurationsId });
                     table.ForeignKey(
-                        name: "FK_UnitConfigurationAbility_Abilities_AbilityId",
-                        column: x => x.AbilityId,
+                        name: "FK_UnitConfigurationAbilities_Abilities_AbilitiesCode",
+                        column: x => x.AbilitiesCode,
                         principalTable: "Abilities",
-                        principalColumn: "Id",
+                        principalColumn: "Code",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UnitConfigurationAbility_UnitConfigurations_UnitConfigurati~",
-                        column: x => x.UnitConfigurationId,
+                        name: "FK_UnitConfigurationAbilities_UnitConfigurations_UnitConfigura~",
+                        column: x => x.UnitConfigurationsId,
                         principalTable: "UnitConfigurations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UnitConfigurationUpgrade",
+                name: "UnitConfigurationUpgrades",
                 columns: table => new
                 {
-                    UnitConfigurationId = table.Column<int>(type: "integer", nullable: false),
-                    UpgradeId = table.Column<int>(type: "integer", nullable: false)
+                    UnitConfigurationsId = table.Column<int>(type: "integer", nullable: false),
+                    UpgradesCode = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UnitConfigurationUpgrade", x => new { x.UnitConfigurationId, x.UpgradeId });
+                    table.PrimaryKey("PK_UnitConfigurationUpgrades", x => new { x.UnitConfigurationsId, x.UpgradesCode });
                     table.ForeignKey(
-                        name: "FK_UnitConfigurationUpgrade_UnitConfigurations_UnitConfigurati~",
-                        column: x => x.UnitConfigurationId,
+                        name: "FK_UnitConfigurationUpgrades_UnitConfigurations_UnitConfigurat~",
+                        column: x => x.UnitConfigurationsId,
                         principalTable: "UnitConfigurations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UnitConfigurationUpgrade_Upgrades_UpgradeId",
-                        column: x => x.UpgradeId,
+                        name: "FK_UnitConfigurationUpgrades_Upgrades_UpgradesCode",
+                        column: x => x.UpgradesCode,
                         principalTable: "Upgrades",
-                        principalColumn: "Id",
+                        principalColumn: "Code",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -456,9 +455,9 @@ namespace Server.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UnitConfigurationAbility_AbilityId",
-                table: "UnitConfigurationAbility",
-                column: "AbilityId");
+                name: "IX_UnitConfigurationAbilities_UnitConfigurationsId",
+                table: "UnitConfigurationAbilities",
+                column: "UnitConfigurationsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UnitConfigurations_Type",
@@ -467,9 +466,9 @@ namespace Server.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UnitConfigurationUpgrade_UpgradeId",
-                table: "UnitConfigurationUpgrade",
-                column: "UpgradeId");
+                name: "IX_UnitConfigurationUpgrades_UpgradesCode",
+                table: "UnitConfigurationUpgrades",
+                column: "UpgradesCode");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -505,10 +504,10 @@ namespace Server.Data.Migrations
                 name: "Photos");
 
             migrationBuilder.DropTable(
-                name: "UnitConfigurationAbility");
+                name: "UnitConfigurationAbilities");
 
             migrationBuilder.DropTable(
-                name: "UnitConfigurationUpgrade");
+                name: "UnitConfigurationUpgrades");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,12 +1,12 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Server.Models.UnitConfigurations;
-using Server.Models.Items;
 using Server.Models.Games;
+using Server.Models.Items;
+using Server.Models.UnitConfigurations;
 using Server.Models.Users;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Server.Data
 {
@@ -82,37 +82,47 @@ namespace Server.Data
                 .HasIndex(x => x.Type)
                 .IsUnique();
 
-            // Many to many
-            builder.Entity<UnitConfigurationAbility>(unitConfigurationAbility =>
-            {
-                unitConfigurationAbility.HasKey(ad => new { ad.UnitConfigurationId, ad.AbilityId });
+            builder.Entity<UnitConfiguration>()
+                .HasMany(x => x.Abilities)
+                .WithMany(x => x.UnitConfigurations)
+                .UsingEntity(x => x.ToTable("UnitConfigurationAbilities"));
 
-                unitConfigurationAbility.HasOne(ad => ad.UnitConfiguration)
-                .WithMany(a => a.UnitConfigurationAbilitys)
-                .HasForeignKey(ad => ad.UnitConfigurationId)
-                .IsRequired();
+            builder.Entity<UnitConfiguration>()
+                .HasMany(x => x.Upgrades)
+                .WithMany(x => x.UnitConfigurations)
+                .UsingEntity(x => x.ToTable("UnitConfigurationUpgrades"));
 
-                unitConfigurationAbility.HasOne(ad => ad.Ability)
-                .WithMany(a => a.UnitConfigurationAbilitys)
-                .HasForeignKey(ad => ad.AbilityId)
-                .IsRequired();
-            });
+            //// Many to many
+            //builder.Entity<UnitConfigurationAbility>(unitConfigurationAbility =>
+            //{
+            //    unitConfigurationAbility.HasKey(ad => new { ad.UnitConfigurationId, ad.AbilityId });
 
-            // Many to many
-            builder.Entity<UnitConfigurationUpgrade>(unitConfigurationUpgrade =>
-            {
-                unitConfigurationUpgrade.HasKey(ad => new { ad.UnitConfigurationId, ad.UpgradeId });
+            //    unitConfigurationAbility.HasOne(ad => ad.UnitConfiguration)
+            //    .WithMany(a => a.UnitConfigurationAbilitys)
+            //    .HasForeignKey(ad => ad.UnitConfigurationId)
+            //    .IsRequired();
 
-                unitConfigurationUpgrade.HasOne(ad => ad.UnitConfiguration)
-                .WithMany(a => a.UnitConfigurationUpgrades)
-                .HasForeignKey(ad => ad.UnitConfigurationId)
-                .IsRequired();
+            //    unitConfigurationAbility.HasOne(ad => ad.Ability)
+            //    .WithMany(a => a.UnitConfigurationAbilitys)
+            //    .HasForeignKey(ad => ad.AbilityId)
+            //    .IsRequired();
+            //});
 
-                unitConfigurationUpgrade.HasOne(ad => ad.Upgrade)
-                .WithMany(a => a.UnitConfigurationUpgrades)
-                .HasForeignKey(ad => ad.UpgradeId)
-                .IsRequired();
-            });
+            //// Many to many
+            //builder.Entity<UnitConfigurationUpgrade>(unitConfigurationUpgrade =>
+            //{
+            //    unitConfigurationUpgrade.HasKey(ad => new { ad.UnitConfigurationId, ad.UpgradeId });
+
+            //    unitConfigurationUpgrade.HasOne(ad => ad.UnitConfiguration)
+            //    .WithMany(a => a.UnitConfigurationUpgrades)
+            //    .HasForeignKey(ad => ad.UnitConfigurationId)
+            //    .IsRequired();
+
+            //    unitConfigurationUpgrade.HasOne(ad => ad.Upgrade)
+            //    .WithMany(a => a.UnitConfigurationUpgrades)
+            //    .HasForeignKey(ad => ad.UpgradeId)
+            //    .IsRequired();
+            //});
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))

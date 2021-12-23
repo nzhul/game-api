@@ -1,12 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models.UnitConfigurations
 {
     public class Upgrade
     {
-        public int Id { get; set; }
+        public Upgrade()
+        {
+            UnitConfigurations = new List<UnitConfiguration>();
+        }
 
-        public int Name { get; set; }
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string Code { get; set; }
+
+        public string DisplayName { get; set; }
 
         public int WoodCost { get; set; }
 
@@ -14,7 +24,7 @@ namespace Server.Models.UnitConfigurations
 
         public int TimeCost { get; set; }
 
-        public ICollection<UnitConfigurationUpgrade> UnitConfigurationUpgrades { get; set; }
+        public virtual ICollection<UnitConfiguration> UnitConfigurations { get; set; }
 
         //public int HitpointBonus { get; set; }
 

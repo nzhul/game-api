@@ -1,0 +1,42 @@
+﻿[
+    {
+        "DisplayName": "Normal Attack",
+        "Code": "NA",
+        "ResourceCost": 0,
+        "ActionPointsCost": 1,
+        "MovementPointsCost": 0,
+        "Description": "Strike your opponent with vicious close range attack!"
+    },
+    {
+        "DisplayName": "Range Attack",
+        "Code": "RA",
+        "ResourceCost": 0,
+        "ActionPointsCost": 1,
+        "MovementPointsCost": 0,
+        "Description": "Strike your opponent from a distance!"
+    },
+    {
+        "DisplayName": "Vanguard Strike",
+        "Code": "PLD_VS",
+        "ResourceCost": -5,
+        "ActionPointsCost": 1,
+        "MovementPointsCost": 0,
+        "Description": "Strike your enemy for 120% weapon damage and gain Hardened Senses, increasing your Block Chance by 15% for 2 rounds. Generates 5 resource!"
+    },
+    {
+        "DisplayName": "Hammer of Justice",
+        "Code": "PLD_HOJ",
+        "ResourceCost": 20,
+        "ActionPointsCost": 2,
+        "MovementPointsCost": 0,
+        "Description": "Call forth a massive hammer to smash enemies directly in front of you for 200% weapon damage. Hammer of Justice has a 10% increased Critical Hit Chance for every 5 Resource that you have."
+    },
+    {
+        "DisplayName": "Blinding Light",
+        "Code": "PLD_BL",
+        "ResourceCost": 10,
+        "ActionPointsCost": 1,
+        "MovementPointsCost": 0,
+        "Description": "Light erupts from your shield, Blinding all enemies up to 3 nodes in front of you for 2 rounds."
+    }
+]
