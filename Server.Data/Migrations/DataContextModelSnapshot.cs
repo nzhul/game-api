@@ -257,6 +257,9 @@ namespace Server.Data.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("UsesMana")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("WoodCost")
                         .HasColumnType("integer");
 

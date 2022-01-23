@@ -23,6 +23,8 @@ namespace Server.Api.Models.View.UnitConfigurations
 
         public int Mana { get; set; }
 
+        public bool UsesMana { get; set; }
+
         public int Armor { get; set; }
 
         public AttackType AttackType { get; set; }

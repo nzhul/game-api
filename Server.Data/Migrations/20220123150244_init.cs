@@ -127,6 +127,7 @@ namespace Server.Data.Migrations
                     Hitpoints = table.Column<int>(type: "integer", nullable: false),
                     HitpointsIncrement = table.Column<int>(type: "integer", nullable: false),
                     Mana = table.Column<int>(type: "integer", nullable: false),
+                    UsesMana = table.Column<bool>(type: "boolean", nullable: false),
                     ManaIncrement = table.Column<int>(type: "integer", nullable: false),
                     Armor = table.Column<int>(type: "integer", nullable: false),
                     ArmorIncrement = table.Column<int>(type: "integer", nullable: false),

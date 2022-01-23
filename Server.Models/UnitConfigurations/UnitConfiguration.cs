@@ -42,6 +42,8 @@ namespace Server.Models.UnitConfigurations
 
         public int Mana { get; set; }
 
+        public bool UsesMana { get; set; }
+
         public int ManaIncrement { get; set; }
 
         public int Armor { get; set; }
