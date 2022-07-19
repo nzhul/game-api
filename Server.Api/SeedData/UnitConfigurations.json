@@ -30,7 +30,7 @@
   },
   {
     "Type": "Troll",
-    "MovementPoints": 5,
+    "MovementPoints": 1,
     "ActionPoints": 1,
     "MinDamage": 15,
     "MaxDamage": 20,
