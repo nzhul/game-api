@@ -41,4 +41,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties seeddata_4unitconfigurations_1json__JsonSchema="https://docs.renovatebot.com/renovate-schema.json" /></VisualStudio></ProjectExtensions>
 </Project>
