@@ -2,10 +2,14 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
+#nullable disable
+
 namespace Server.Data.Migrations
 {
+    /// <inheritdoc />
     public partial class init : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -49,15 +53,15 @@ namespace Server.Data.Migrations
                     MMR = table.Column<int>(type: "integer", nullable: false),
                     Discriminator = table.Column<string>(type: "text", nullable: true),
                     Gender = table.Column<string>(type: "text", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    LastActive = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastActive = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Interests = table.Column<string>(type: "text", nullable: true),
                     City = table.Column<string>(type: "text", nullable: true),
                     Country = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    ModifiedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ActiveConnection = table.Column<int>(type: "integer", nullable: false),
                     BattleId = table.Column<Guid>(type: "uuid", nullable: true),
                     GameId = table.Column<int>(type: "integer", nullable: true),
@@ -273,8 +277,8 @@ namespace Server.Data.Migrations
                 {
                     SenderId = table.Column<int>(type: "integer", nullable: false),
                     RecieverId = table.Column<int>(type: "integer", nullable: false),
-                    RequestTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    BecameFriendsTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    RequestTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    BecameFriendsTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     State = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -304,8 +308,8 @@ namespace Server.Data.Migrations
                     RecipientId = table.Column<int>(type: "integer", nullable: true),
                     Content = table.Column<string>(type: "text", nullable: true),
                     IsRead = table.Column<bool>(type: "boolean", nullable: false),
-                    DateRead = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    MessageSent = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DateRead = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    MessageSent = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     SenderDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     RecipientDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -334,7 +338,7 @@ namespace Server.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Url = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    DateAdded = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsMain = table.Column<bool>(type: "boolean", nullable: false),
                     PublicId = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<int>(type: "integer", nullable: true)
@@ -346,8 +350,7 @@ namespace Server.Data.Migrations
                         name: "FK_Photos_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -472,6 +475,7 @@ namespace Server.Data.Migrations
                 column: "UpgradesCode");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

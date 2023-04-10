@@ -5,6 +5,7 @@ using Server.Models.Games;
 using Server.Models.Items;
 using Server.Models.UnitConfigurations;
 using Server.Models.Users;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,12 @@ namespace Server.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
+            // dido: temporary fix for breaking change in postgre database.
+            // basically there is new requirement that require for the user to provide timezone.
+            // see: https://stackoverflow.com/questions/69961449/net6-and-datetime-problem-cannot-write-datetime-with-kind-utc-to-postgresql-ty
+            // probably the problem will be resolved if I use DateTime.Utc everywhere.
+            // the question is what happens when you parse JSON and the datetime is automatically created.
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         public DbSet<Photo> Photos { get; set; }
