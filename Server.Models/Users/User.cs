@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Server.Models.Users
 {
+    // TODO: Move this into data layer. When everything is moved > delete Server.Models.
     public class User : IdentityUser<int>, IAuditedEntity
     {
         public int MMR { get; set; }

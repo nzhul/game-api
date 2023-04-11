@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Text;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -13,11 +13,16 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Server.Api.Behaviours;
 using Server.Api.Helpers;
+using Server.Application.Features.Auth;
+using Server.Common.Middlewares;
 using Server.Data;
 using Server.Data.Services.Abstraction;
 using Server.Data.Services.Implementation;
 using Server.Models.Users;
+using System.Reflection;
+using System.Text;
 
 namespace Server.Api
 {
@@ -73,6 +78,13 @@ namespace Server.Api
             });
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).GetTypeInfo().Assembly);
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
+            });
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddValidatorsFromAssembly(typeof(LoginQueryValidator).Assembly);
+
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IUnitConfigurationsService, UnitConfigurationsService>();
@@ -110,7 +122,6 @@ namespace Server.Api
                 opt.SerializerSettings.Converters.Add(new StringEnumConverter());
             });
 
-
             // TODO: Swagger ?
         }
 
@@ -118,6 +129,8 @@ namespace Server.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //TODO: Middleware for exceptions
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseRouting();
             app.UseCors("CorsPolicy");

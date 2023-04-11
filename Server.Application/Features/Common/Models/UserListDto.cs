@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace Server.Api.Models.View
+namespace Server.Application.Features.Common.Models
 {
-    public class UserForDetailedDto
+    public class UserListDto
     {
         public int Id { get; set; }
 
         public int MMR { get; set; }
 
         public string Username { get; set; }
+
+        public int CurrentRealmId { get; set; }
 
         public string Gender { get; set; }
 
@@ -20,10 +21,6 @@ namespace Server.Api.Models.View
         public DateTime Created { get; set; }
 
         public DateTime LastActive { get; set; }
-
-        public string Introduction { get; set; }
-
-        public string LookingFor { get; set; }
 
         public string Interests { get; set; }
 
@@ -36,7 +33,5 @@ namespace Server.Api.Models.View
         public int GameId { get; set; }
 
         public Guid? BattleId { get; set; }
-
-        public ICollection<PhotosForDetailedDto> Photos { get; set; }
     }
 }

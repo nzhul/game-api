@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +8,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Server.Api.Models.Input;
 using Server.Api.Models.View;
+using Server.Application.Features.Auth;
+using Server.Application.Features.Common.Models;
 using Server.Models.Users;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Server.Api.Controllers
 {
@@ -26,15 +30,19 @@ namespace Server.Api.Controllers
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
 
+        private readonly IMediator _mediator;
+
         public AuthController(UserManager<User> userManager,
             SignInManager<User> signInManager,
             IConfiguration config,
-            IMapper mapper)
+            IMapper mapper,
+            IMediator mediator)
         {
             this._mapper = mapper;
             this._config = config;
             this._userManager = userManager;
             this._signInManager = signInManager;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
@@ -49,7 +57,7 @@ namespace Server.Api.Controllers
 
             var result = await _userManager.CreateAsync(userToCreate, userForRegistrationDto.Password);
 
-            var userToReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
+            var userToReturn = _mapper.Map<UserDetailedDto>(userToCreate);
 
             if (result.Succeeded)
             {
@@ -63,34 +71,40 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
+        public async Task<ActionResult<LoginResult>> Login([FromBody] LoginQuery query, CancellationToken cancellationToken)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = await _userManager.FindByNameAsync(userForLoginDto.Username);
-
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
-
-            if (result.Succeeded)
-            {
-                var appUser = await _userManager.Users.Include(p => p.Photos)
-                    .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.Username.ToUpper());
-
-                var userToReturn = _mapper.Map<UserForListDto>(appUser);
-
-                return Ok(new { tokenString = await this.GenerateJwtToken(appUser), user = userToReturn });
-            }
-
-            return Unauthorized();
+            return await _mediator.Send(query, cancellationToken);
         }
+
+        //[HttpPost("login")]
+        //public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var user = await _userManager.FindByNameAsync(userForLoginDto.Username);
+
+        //    if (user == null)
+        //    {
+        //        return Unauthorized();
+        //    }
+
+        //    var result = await _signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
+
+        //    if (result.Succeeded)
+        //    {
+        //        var appUser = await _userManager.Users.Include(p => p.Photos)
+        //            .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.Username.ToUpper());
+
+        //        var userToReturn = _mapper.Map<UserListDto>(appUser);
+
+        //        return Ok(new { tokenString = await this.GenerateJwtToken(appUser), user = userToReturn });
+        //    }
+
+        //    return Unauthorized();
+        //}
 
         [Authorize]
         [HttpGet("logout")]

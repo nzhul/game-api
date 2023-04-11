@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Api.Helpers;
 using Server.Api.Models.View;
+using Server.Application.Features.Common.Models;
 using Server.Data.Services.Abstraction;
 using Server.Models.Users;
 
@@ -29,7 +30,7 @@ namespace Server.Api.Controllers
         {
             User user = await _usersService.GetUser(id);
 
-            UserForDetailedDto userToReturn = _mapper.Map<UserForDetailedDto>(user);
+            UserDetailedDto userToReturn = _mapper.Map<UserDetailedDto>(user);
 
             return Ok(userToReturn);
         }
@@ -43,7 +44,7 @@ namespace Server.Api.Controllers
 
             Server.Models.Pagination.PagedList<User> users = await _usersService.GetUsers(userParams);
 
-            IEnumerable<UserForListDto> usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
+            IEnumerable<UserListDto> usersToReturn = _mapper.Map<IEnumerable<UserListDto>>(users);
 
             Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
@@ -115,7 +116,7 @@ namespace Server.Api.Controllers
 
             if (friends != null)
             {
-                IEnumerable<UserForListDto> usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(friends);
+                IEnumerable<UserListDto> usersToReturn = _mapper.Map<IEnumerable<UserListDto>>(friends);
                 return Ok(usersToReturn);
             }
             else
