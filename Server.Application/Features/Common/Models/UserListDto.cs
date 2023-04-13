@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Server.Common.Mappings;
+using Server.Models.Users;
+using System;
 
 namespace Server.Application.Features.Common.Models
 {
-    public class UserListDto
+    public class UserListDto : IMapFrom<User>
     {
         public int Id { get; set; }
 

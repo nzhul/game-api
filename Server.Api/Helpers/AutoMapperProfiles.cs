@@ -9,6 +9,7 @@ using Server.Models.Users;
 
 namespace Server.Api.Helpers
 {
+    // TODO: Delete this class!
     public class AutoMapperProfiles : Profile
     {
         public AutoMapperProfiles()

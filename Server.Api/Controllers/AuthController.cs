@@ -3,17 +3,15 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Server.Api.Models.Input;
 using Server.Api.Models.View;
 using Server.Application.Features.Auth;
-using Server.Application.Features.Common.Models;
 using Server.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
@@ -45,36 +43,43 @@ namespace Server.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userForRegistrationDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var userToCreate = _mapper.Map<User>(userForRegistrationDto);
-
-            var result = await _userManager.CreateAsync(userToCreate, userForRegistrationDto.Password);
-
-            var userToReturn = _mapper.Map<UserDetailedDto>(userToCreate);
-
-            if (result.Succeeded)
-            {
-                return CreatedAtRoute("GetUser",
-                    new { controller = "Users", id = userToCreate.Id }, userToReturn);
-            }
-
-            ErrorModel errorModel = this.BuildErrorModel(result.Errors);
-
-            return BadRequest(errorModel); // LowerCase problem probably
-        }
-
         [HttpPost("login")]
         public async Task<ActionResult<LoginResult>> Login([FromBody] LoginQuery query, CancellationToken cancellationToken)
         {
             return await _mediator.Send(query, cancellationToken);
         }
+
+        [HttpPost("register")]
+        public async Task<ActionResult> Register([FromBody] RegisterCommand command, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(command, cancellationToken);
+            return StatusCode((int)HttpStatusCode.Created);
+        }
+
+        //[HttpPost("register")]
+        //public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userForRegistrationDto)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var userToCreate = _mapper.Map<User>(userForRegistrationDto);
+
+        //    var result = await _userManager.CreateAsync(userToCreate, userForRegistrationDto.Password);
+
+        //    var userToReturn = _mapper.Map<UserDetailedDto>(userToCreate);
+
+        //    if (result.Succeeded)
+        //    {
+        //        return CreatedAtRoute("GetUser",
+        //            new { controller = "Users", id = userToCreate.Id }, userToReturn);
+        //    }
+
+        //    ErrorModel errorModel = this.BuildErrorModel(result.Errors);
+
+        //    return BadRequest(errorModel); // LowerCase problem probably
+        //}
 
         //[HttpPost("login")]
         //public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)

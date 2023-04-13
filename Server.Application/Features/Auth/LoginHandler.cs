@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
+using Server.Common;
 
 namespace Server.Application.Features.Auth
 {
@@ -112,16 +113,15 @@ namespace Server.Application.Features.Auth
         public LoginQueryValidator()
         {
             RuleFor(r => r.Username)
-                .NotNull()
                 .NotEmpty()
-                .MinimumLength(3)
-                .MaximumLength(16); // todo: extract into constant
+                .MinimumLength(Constants.MinUsernameLength)
+                .MaximumLength(Constants.MaxUsernameLength)
+                .Matches(Constants.UsernameRegex);
 
             RuleFor(r => r.Password)
-                .NotNull()
                 .NotEmpty()
-                .MinimumLength(3)
-                .MaximumLength(50); // todo: extract into constant
+                .MinimumLength(Constants.MinPasswordLength)
+                .MaximumLength(Constants.MaxPasswordLength);
         }
     }
 

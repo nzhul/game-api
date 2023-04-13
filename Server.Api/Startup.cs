@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,15 +11,12 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using Server.Api.Behaviours;
-using Server.Api.Helpers;
-using Server.Application.Features.Auth;
+using Server.Application;
 using Server.Common.Middlewares;
 using Server.Data;
 using Server.Data.Services.Abstraction;
 using Server.Data.Services.Implementation;
 using Server.Models.Users;
-using System.Reflection;
 using System.Text;
 
 namespace Server.Api
@@ -77,13 +72,16 @@ namespace Server.Api
                 });
             });
 
-            services.AddAutoMapper(typeof(AutoMapperProfiles).GetTypeInfo().Assembly);
-            services.AddMediatR(cfg =>
-            {
-                cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
-            });
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddValidatorsFromAssembly(typeof(LoginQueryValidator).Assembly);
+            services.AddApplicationServices();
+            //services.AddAutoMapper(typeof(AutoMapperProfiles).GetTypeInfo().Assembly);
+            //services.AddMediatR(cfg =>
+            //{
+            //    cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
+            //    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            //});
+
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            //services.AddValidatorsFromAssembly(typeof(LoginQueryValidator).Assembly);
 
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IUsersService, UsersService>();
