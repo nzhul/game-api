@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Api.Models.View.UnitConfigurations;
 using Server.Data.Services.Abstraction;
-using Server.Models.MapEntities;
+using Server.Data.MapEntities;
 
 namespace Server.Api.Controllers
 {

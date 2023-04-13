@@ -12,7 +12,7 @@ namespace Server.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MappingContainer).Assembly);
-            services.AddValidatorsFromAssembly(typeof(LoginQueryValidator).Assembly);
+            services.AddValidatorsFromAssembly(typeof(RegisterCommandValidator).Assembly);
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);

@@ -1,12 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using Server.Data.Pagination;
+using Server.Data.Services.Abstraction;
+using Server.Data.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Server.Data.Services.Abstraction;
-using Server.Models;
-using Server.Models.Pagination;
-using Server.Models.Users;
 
 namespace Server.Data.Services.Implementation
 {

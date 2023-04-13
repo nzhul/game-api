@@ -16,7 +16,7 @@ using Server.Common.Middlewares;
 using Server.Data;
 using Server.Data.Services.Abstraction;
 using Server.Data.Services.Implementation;
-using Server.Models.Users;
+using Server.Data.Users;
 using System.Text;
 
 namespace Server.Api

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Data;
-using Server.Models.Users;
+using Server.Data.Users;
 
 namespace Server.Api
 {

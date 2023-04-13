@@ -8,7 +8,7 @@ using Server.Api.Helpers;
 using Server.Api.Models.View;
 using Server.Application.Features.Common.Models;
 using Server.Data.Services.Abstraction;
-using Server.Models.Users;
+using Server.Data.Users;
 
 namespace Server.Api.Controllers
 {
@@ -42,7 +42,7 @@ namespace Server.Api.Controllers
 
             userParams.UserId = currentUserId;
 
-            Server.Models.Pagination.PagedList<User> users = await _usersService.GetUsers(userParams);
+            Server.Data.Pagination.PagedList<User> users = await _usersService.GetUsers(userParams);
 
             IEnumerable<UserListDto> usersToReturn = _mapper.Map<IEnumerable<UserListDto>>(users);
 

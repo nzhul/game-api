@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using Server.Data.Services.Abstraction;
+using System.Threading.Tasks;
 
 namespace Server.Data.Services.Implementation
 {
@@ -7,7 +7,8 @@ namespace Server.Data.Services.Implementation
     {
         protected readonly DataContext _context;
 
-        protected BaseService(DataContext context){
+        protected BaseService(DataContext context)
+        {
             this._context = context;
         }
 

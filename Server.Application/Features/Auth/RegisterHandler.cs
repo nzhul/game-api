@@ -3,7 +3,13 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Server.Common;
-using Server.Models.Users;
+using Server.Common.Enums;
+using Server.Common.Errors;
+using Server.Common.Exceptions;
+using Server.Common.Mappings;
+using Server.Data.Users;
+using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,15 +20,30 @@ namespace Server.Application.Features.Auth
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public RegisterHandler(IMapper mapper)
+        public RegisterHandler(UserManager<User> userManager, IMapper mapper)
         {
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             var newUser = _mapper.Map<User>(request);
-            await _userManager.CreateAsync(newUser, request.Password);
+            var result = await _userManager.CreateAsync(newUser, request.Password);
+
+            if (!result.Succeeded && result.Errors.Any())
+            {
+                var errors = result.Errors.Select(e =>
+                    new RestError(e.Code, nameof(User), e.Description));
+
+                throw new RestException(HttpStatusCode.BadRequest,
+                    new RestError(
+                        RestErrorCode.UserAlreadyExists,
+                        nameof(User),
+                        "Duplicated user",
+                        errors.ToArray())
+                    );
+            }
         }
     }
 
@@ -30,7 +51,7 @@ namespace Server.Application.Features.Auth
     {
         public RegisterCommandValidator()
         {
-            RuleFor(x => x.Username)
+            RuleFor(r => r.Username)
                 .NotEmpty()
                 .MinimumLength(Constants.MinUsernameLength)
                 .MaximumLength(Constants.MaxUsernameLength)
@@ -54,9 +75,16 @@ namespace Server.Application.Features.Auth
         }
     }
 
-    public record RegisterCommand(
-        string Username,
-        string Email,
-        string Password,
-        string ConfirmPassword) : IRequest;
+    // I am not using record, because records does not have parameterless constructor,
+    // this is a problem for MappingProfile.cs line 31
+    public class RegisterCommand : IRequest, IMapTo<User>
+    {
+        public string Username { get; set; }
+
+        public string Email { get; set; }
+
+        public string Password { get; set; }
+
+        public string ConfirmPassword { get; set; }
+    }
 }

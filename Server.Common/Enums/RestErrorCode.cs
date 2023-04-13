@@ -12,6 +12,6 @@
         PasswordReuseNotAllowed,
         Unauthorized,
         UserAlreadyExists,
-        RemoteError
+        RemoteError,
     }
 }

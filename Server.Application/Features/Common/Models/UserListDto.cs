@@ -1,5 +1,5 @@
 ﻿using Server.Common.Mappings;
-using Server.Models.Users;
+using Server.Data.Users;
 using System;
 
 namespace Server.Application.Features.Common.Models

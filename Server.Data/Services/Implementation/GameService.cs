@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Server.Data.Games;
 using Server.Data.Services.Abstraction;
-using Server.Models.Games;
+using System.Threading.Tasks;
 
 namespace Server.Data.Services.Implementation
 {

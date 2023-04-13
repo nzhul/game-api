@@ -128,7 +128,7 @@ namespace Server.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Server.Models.Games.Game", b =>
+            modelBuilder.Entity("Server.Data.Games.Game", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,7 +144,7 @@ namespace Server.Data.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("Server.Models.Items.ItemBlueprint", b =>
+            modelBuilder.Entity("Server.Data.Items.ItemBlueprint", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,7 +166,7 @@ namespace Server.Data.Migrations
                     b.ToTable("ItemBlueprints");
                 });
 
-            modelBuilder.Entity("Server.Models.UnitConfigurations.Ability", b =>
+            modelBuilder.Entity("Server.Data.UnitConfigurations.Ability", b =>
                 {
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -194,7 +194,7 @@ namespace Server.Data.Migrations
                     b.ToTable("Abilities");
                 });
 
-            modelBuilder.Entity("Server.Models.UnitConfigurations.UnitConfiguration", b =>
+            modelBuilder.Entity("Server.Data.UnitConfigurations.UnitConfiguration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -282,7 +282,7 @@ namespace Server.Data.Migrations
                     b.ToTable("UnitConfigurations");
                 });
 
-            modelBuilder.Entity("Server.Models.UnitConfigurations.Upgrade", b =>
+            modelBuilder.Entity("Server.Data.UnitConfigurations.Upgrade", b =>
                 {
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -304,7 +304,7 @@ namespace Server.Data.Migrations
                     b.ToTable("Upgrades");
                 });
 
-            modelBuilder.Entity("Server.Models.Users.Friendship", b =>
+            modelBuilder.Entity("Server.Data.Users.Friendship", b =>
                 {
                     b.Property<int>("SenderId")
                         .HasColumnType("integer");
@@ -328,7 +328,7 @@ namespace Server.Data.Migrations
                     b.ToTable("Friendships");
                 });
 
-            modelBuilder.Entity("Server.Models.Users.Message", b =>
+            modelBuilder.Entity("Server.Data.Users.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -369,7 +369,7 @@ namespace Server.Data.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("Server.Models.Users.Photo", b =>
+            modelBuilder.Entity("Server.Data.Users.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -402,7 +402,7 @@ namespace Server.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("Server.Models.Users.Role", b =>
+            modelBuilder.Entity("Server.Data.Users.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -431,7 +431,7 @@ namespace Server.Data.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Server.Models.Users.User", b =>
+            modelBuilder.Entity("Server.Data.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -546,7 +546,7 @@ namespace Server.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Server.Models.Users.UserRole", b =>
+            modelBuilder.Entity("Server.Data.Users.UserRole", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -578,13 +578,13 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("AbilityUnitConfiguration", b =>
                 {
-                    b.HasOne("Server.Models.UnitConfigurations.Ability", null)
+                    b.HasOne("Server.Data.UnitConfigurations.Ability", null)
                         .WithMany()
                         .HasForeignKey("AbilitiesCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.UnitConfigurations.UnitConfiguration", null)
+                    b.HasOne("Server.Data.UnitConfigurations.UnitConfiguration", null)
                         .WithMany()
                         .HasForeignKey("UnitConfigurationsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -593,7 +593,7 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Server.Models.Users.Role", null)
+                    b.HasOne("Server.Data.Users.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -602,7 +602,7 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Server.Models.Users.User", null)
+                    b.HasOne("Server.Data.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -611,7 +611,7 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Server.Models.Users.User", null)
+                    b.HasOne("Server.Data.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -620,22 +620,22 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Server.Models.Users.User", null)
+                    b.HasOne("Server.Data.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Server.Models.Users.Friendship", b =>
+            modelBuilder.Entity("Server.Data.Users.Friendship", b =>
                 {
-                    b.HasOne("Server.Models.Users.User", "Reciever")
+                    b.HasOne("Server.Data.Users.User", "Reciever")
                         .WithMany("RecievedFriendRequests")
                         .HasForeignKey("RecieverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.Users.User", "Sender")
+                    b.HasOne("Server.Data.Users.User", "Sender")
                         .WithMany("SendFriendRequests")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -646,14 +646,14 @@ namespace Server.Data.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Server.Models.Users.Message", b =>
+            modelBuilder.Entity("Server.Data.Users.Message", b =>
                 {
-                    b.HasOne("Server.Models.Users.User", "Recipient")
+                    b.HasOne("Server.Data.Users.User", "Recipient")
                         .WithMany("MessagesRecieved")
                         .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Server.Models.Users.User", "Sender")
+                    b.HasOne("Server.Data.Users.User", "Sender")
                         .WithMany("MessagesSent")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -663,24 +663,24 @@ namespace Server.Data.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Server.Models.Users.Photo", b =>
+            modelBuilder.Entity("Server.Data.Users.Photo", b =>
                 {
-                    b.HasOne("Server.Models.Users.User", "User")
+                    b.HasOne("Server.Data.Users.User", "User")
                         .WithMany("Photos")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Server.Models.Users.UserRole", b =>
+            modelBuilder.Entity("Server.Data.Users.UserRole", b =>
                 {
-                    b.HasOne("Server.Models.Users.Role", "Role")
+                    b.HasOne("Server.Data.Users.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.Users.User", "User")
+                    b.HasOne("Server.Data.Users.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -693,25 +693,25 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("UnitConfigurationUpgrade", b =>
                 {
-                    b.HasOne("Server.Models.UnitConfigurations.UnitConfiguration", null)
+                    b.HasOne("Server.Data.UnitConfigurations.UnitConfiguration", null)
                         .WithMany()
                         .HasForeignKey("UnitConfigurationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.UnitConfigurations.Upgrade", null)
+                    b.HasOne("Server.Data.UnitConfigurations.Upgrade", null)
                         .WithMany()
                         .HasForeignKey("UpgradesCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Server.Models.Users.Role", b =>
+            modelBuilder.Entity("Server.Data.Users.Role", b =>
                 {
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("Server.Models.Users.User", b =>
+            modelBuilder.Entity("Server.Data.Users.User", b =>
                 {
                     b.Navigation("MessagesRecieved");
 

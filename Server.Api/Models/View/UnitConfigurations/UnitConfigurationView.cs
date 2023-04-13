@@ -1,5 +1,5 @@
-﻿using Server.Models.MapEntities;
-using Server.Models.UnitConfigurations;
+﻿using Server.Data.MapEntities;
+using Server.Data.UnitConfigurations;
 
 namespace Server.Api.Models.View.UnitConfigurations
 {

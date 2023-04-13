@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Server.Api.Behaviours
 {
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : notnull
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 

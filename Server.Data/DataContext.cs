@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Server.Models.Games;
-using Server.Models.Items;
-using Server.Models.UnitConfigurations;
-using Server.Models.Users;
+using Server.Data.Games;
+using Server.Data.Items;
+using Server.Data.UnitConfigurations;
+using Server.Data.Users;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

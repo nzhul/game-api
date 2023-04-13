@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Server.Common\Server.Common.csproj" />
-    <ProjectReference Include="..\Server.Models\Server.Models.csproj" />
+    <ProjectReference Include="..\Server.Data\Server.Data.csproj" />
   </ItemGroup>
 
 </Project>

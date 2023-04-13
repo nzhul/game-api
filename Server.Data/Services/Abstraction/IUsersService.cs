@@ -1,7 +1,7 @@
+using Server.Data.Pagination;
+using Server.Data.Users;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Server.Models.Pagination;
-using Server.Models.Users;
 
 namespace Server.Data.Services.Abstraction
 {
@@ -59,7 +59,7 @@ namespace Server.Data.Services.Abstraction
         /// <param name="connectionId">the id of the connection in the dedicated server</param>
         /// <returns>Null if success. Error message on fail</returns>
         Task<string> SetOnline(int userId, int connectionId);
-        
+
         /// <summary>
         /// Clears the current battle from the user. Sets it to NULL
         /// </summary>

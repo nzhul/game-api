@@ -7,7 +7,7 @@ using Server.Application.Features.Common.Models;
 using Server.Common.Enums;
 using Server.Common.Errors;
 using Server.Common.Exceptions;
-using Server.Models.Users;
+using Server.Data.Users;
 using System.Collections.Generic;
 using System;
 using System.Net;
