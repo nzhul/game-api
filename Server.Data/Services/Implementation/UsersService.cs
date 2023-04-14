@@ -84,7 +84,7 @@ namespace Server.Data.Services.Implementation
         public async Task<User> GetUser(int id)
         {
             // TODO: i should not use this on all places because includes the photos.
-            return await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User> GetUser(string usernameOrEmail)

@@ -52,20 +52,13 @@ namespace Server.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MMR = table.Column<int>(type: "integer", nullable: false),
                     Discriminator = table.Column<string>(type: "text", nullable: true),
-                    Gender = table.Column<string>(type: "text", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastActive = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Interests = table.Column<string>(type: "text", nullable: true),
-                    City = table.Column<string>(type: "text", nullable: true),
-                    Country = table.Column<string>(type: "text", nullable: true),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastActive = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ActiveConnection = table.Column<int>(type: "integer", nullable: false),
                     BattleId = table.Column<Guid>(type: "uuid", nullable: true),
                     GameId = table.Column<int>(type: "integer", nullable: true),
                     OnlineStatus = table.Column<byte>(type: "smallint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -277,8 +270,8 @@ namespace Server.Data.Migrations
                 {
                     SenderId = table.Column<int>(type: "integer", nullable: false),
                     RecieverId = table.Column<int>(type: "integer", nullable: false),
-                    RequestTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    BecameFriendsTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    RequestTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    BecameFriendsTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     State = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -308,8 +301,8 @@ namespace Server.Data.Migrations
                     RecipientId = table.Column<int>(type: "integer", nullable: true),
                     Content = table.Column<string>(type: "text", nullable: true),
                     IsRead = table.Column<bool>(type: "boolean", nullable: false),
-                    DateRead = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    MessageSent = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateRead = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    MessageSent = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     SenderDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     RecipientDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -328,29 +321,6 @@ namespace Server.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Photos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Url = table.Column<string>(type: "text", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    DateAdded = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsMain = table.Column<bool>(type: "boolean", nullable: false),
-                    PublicId = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Photos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Photos_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -454,11 +424,6 @@ namespace Server.Data.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Photos_UserId",
-                table: "Photos",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UnitConfigurationAbilities_UnitConfigurationsId",
                 table: "UnitConfigurationAbilities",
                 column: "UnitConfigurationsId");
@@ -504,9 +469,6 @@ namespace Server.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Messages");
-
-            migrationBuilder.DropTable(
-                name: "Photos");
 
             migrationBuilder.DropTable(
                 name: "UnitConfigurationAbilities");

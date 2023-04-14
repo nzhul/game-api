@@ -2,7 +2,6 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Server.Application.Features.Users.Models;
 using Server.Common.Enums;
 using Server.Common.Errors;
 using Server.Common.Exceptions;
@@ -10,7 +9,6 @@ using Server.Common.Mappings;
 using Server.Data;
 using Server.Data.Users;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,7 +28,7 @@ namespace Server.Application.Features.Users
 
         public async Task<UserDetailedDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var dbUser = await _context.Users.Include(u => u.Photos).FirstOrDefaultAsync(u => u.Id == request.UserId);
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId);
 
             if (dbUser == null)
             {
@@ -60,32 +58,13 @@ namespace Server.Application.Features.Users
 
         public string Username { get; set; }
 
-        public string Gender { get; set; }
-
-        public int Age { get; set; }
-
-        public string KnownAs { get; set; }
-
         public DateTime Created { get; set; }
 
         public DateTime LastActive { get; set; }
-
-        public string Introduction { get; set; }
-
-        public string LookingFor { get; set; }
-
-        public string Interests { get; set; }
-
-        public string City { get; set; }
-
-        public string Country { get; set; }
-
-        public string PhotoUrl { get; set; }
 
         public int GameId { get; set; }
 
         public Guid? BattleId { get; set; }
 
-        public ICollection<PhotosForDetailedDto> Photos { get; set; }
     }
 }

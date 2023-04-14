@@ -3,22 +3,22 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Server.Application.Features.Users.Models;
+using Server.Common;
 using Server.Common.Enums;
 using Server.Common.Errors;
 using Server.Common.Exceptions;
 using Server.Data.Users;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
-using Server.Common;
-using Server.Application.Features.Users.Models;
 
 namespace Server.Application.Features.Auth
 {
@@ -58,9 +58,8 @@ namespace Server.Application.Features.Auth
 
             if (loginResult.Succeeded)
             {
-                var appUser = await _userManager.Users.Include(p => p.Photos)
-                    .FirstOrDefaultAsync(u => u.NormalizedUserName == query.Username.ToUpper(),
-                        cancellationToken: cancellationToken);
+                var appUser = await _userManager.Users
+                    .FirstOrDefaultAsync(u => u.NormalizedUserName == query.Username.ToUpper(), cancellationToken);
 
                 var userToReturn = _mapper.Map<UserListDto>(appUser);
 

@@ -99,7 +99,6 @@ namespace Server.Data
             var adminUser = new User
             {
                 UserName = username,
-                Gender = "male",
                 Email = email,
                 MMR = 1000
             };

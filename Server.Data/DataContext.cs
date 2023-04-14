@@ -6,8 +6,6 @@ using Server.Data.Items;
 using Server.Data.UnitConfigurations;
 using Server.Data.Users;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Server.Data
 {
@@ -24,8 +22,6 @@ namespace Server.Data
             // the question is what happens when you parse JSON and the datetime is automatically created.
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
-
-        public DbSet<Photo> Photos { get; set; }
 
         public DbSet<Message> Messages { get; set; }
 
@@ -98,69 +94,6 @@ namespace Server.Data
                 .HasMany(x => x.Upgrades)
                 .WithMany(x => x.UnitConfigurations)
                 .UsingEntity(x => x.ToTable("UnitConfigurationUpgrades"));
-
-            //// Many to many
-            //builder.Entity<UnitConfigurationAbility>(unitConfigurationAbility =>
-            //{
-            //    unitConfigurationAbility.HasKey(ad => new { ad.UnitConfigurationId, ad.AbilityId });
-
-            //    unitConfigurationAbility.HasOne(ad => ad.UnitConfiguration)
-            //    .WithMany(a => a.UnitConfigurationAbilitys)
-            //    .HasForeignKey(ad => ad.UnitConfigurationId)
-            //    .IsRequired();
-
-            //    unitConfigurationAbility.HasOne(ad => ad.Ability)
-            //    .WithMany(a => a.UnitConfigurationAbilitys)
-            //    .HasForeignKey(ad => ad.AbilityId)
-            //    .IsRequired();
-            //});
-
-            //// Many to many
-            //builder.Entity<UnitConfigurationUpgrade>(unitConfigurationUpgrade =>
-            //{
-            //    unitConfigurationUpgrade.HasKey(ad => new { ad.UnitConfigurationId, ad.UpgradeId });
-
-            //    unitConfigurationUpgrade.HasOne(ad => ad.UnitConfiguration)
-            //    .WithMany(a => a.UnitConfigurationUpgrades)
-            //    .HasForeignKey(ad => ad.UnitConfigurationId)
-            //    .IsRequired();
-
-            //    unitConfigurationUpgrade.HasOne(ad => ad.Upgrade)
-            //    .WithMany(a => a.UnitConfigurationUpgrades)
-            //    .HasForeignKey(ad => ad.UpgradeId)
-            //    .IsRequired();
-            //});
         }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //this.ApplyAudition();
-            return base.SaveChangesAsync(cancellationToken);
-        }
-
-        public override int SaveChanges()
-        {
-            //this.ApplyAudition();
-            return base.SaveChanges();
-        }
-
-        //private void ApplyAudition()
-        //{
-        //    var entities = this.ChangeTracker.Entries()
-        //        .Where(e => e.Entity is IAuditedEntity &&
-        //            (e.State == EntityState.Added || e.State == EntityState.Modified));
-
-        //    foreach (var entry in entities)
-        //    {
-        //        var entity = (IAuditedEntity)entry.Entity;
-
-        //        if (entry.State == EntityState.Added)
-        //        {
-        //            entity.CreatedAt = DateTime.UtcNow;
-        //        }
-
-        //        entity.ModifiedAt = DateTime.UtcNow;
-        //    }
-        //}
     }
 }

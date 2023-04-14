@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230410131558_init")]
+    [Migration("20230414182009_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -313,10 +313,10 @@ namespace Server.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("BecameFriendsTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("RequestTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("State")
                         .HasColumnType("integer");
@@ -340,13 +340,13 @@ namespace Server.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("DateRead")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("MessageSent")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("RecipientDeleted")
                         .HasColumnType("boolean");
@@ -367,39 +367,6 @@ namespace Server.Data.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("Server.Data.Users.Photo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsMain")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("PublicId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Server.Data.Users.Role", b =>
@@ -448,24 +415,12 @@ namespace Server.Data.Migrations
                     b.Property<Guid?>("BattleId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("City")
-                        .HasColumnType("text");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Discriminator")
                         .HasColumnType("text");
@@ -480,14 +435,8 @@ namespace Server.Data.Migrations
                     b.Property<int?>("GameId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Interests")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("LastActive")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -497,12 +446,6 @@ namespace Server.Data.Migrations
 
                     b.Property<int>("MMR")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("text");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -529,6 +472,9 @@ namespace Server.Data.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -663,15 +609,6 @@ namespace Server.Data.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Server.Data.Users.Photo", b =>
-                {
-                    b.HasOne("Server.Data.Users.User", "User")
-                        .WithMany("Photos")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Server.Data.Users.UserRole", b =>
                 {
                     b.HasOne("Server.Data.Users.Role", "Role")
@@ -716,8 +653,6 @@ namespace Server.Data.Migrations
                     b.Navigation("MessagesRecieved");
 
                     b.Navigation("MessagesSent");
-
-                    b.Navigation("Photos");
 
                     b.Navigation("RecievedFriendRequests");
 
