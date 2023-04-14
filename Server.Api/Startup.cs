@@ -73,19 +73,9 @@ namespace Server.Api
             });
 
             services.AddApplicationServices();
-            //services.AddAutoMapper(typeof(AutoMapperProfiles).GetTypeInfo().Assembly);
-            //services.AddMediatR(cfg =>
-            //{
-            //    cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
-            //    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            //});
 
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            //services.AddValidatorsFromAssembly(typeof(LoginQueryValidator).Assembly);
 
-            services.AddScoped<IGameService, GameService>();
             services.AddScoped<IUsersService, UsersService>();
-            services.AddScoped<IUnitConfigurationsService, UnitConfigurationsService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

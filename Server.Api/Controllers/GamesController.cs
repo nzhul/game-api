@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Server.Data.Services.Abstraction;
+using Server.Application.Features.Games;
+using System.Threading.Tasks;
 
 namespace Server.Api.Controllers
 {
@@ -11,25 +10,18 @@ namespace Server.Api.Controllers
     [Route("api/[controller]")]
     public class GamesController : ControllerBase
     {
-        private readonly IGameService _gamesService;
+        private readonly IMediator _mediator;
 
-        public GamesController(IMapper mapper, IGameService gameService)
+        public GamesController(IMediator mediator)
         {
-            _gamesService = gameService;
+            _mediator = mediator;
         }
 
         [HttpPut("{id}/{winnerid}/end")]
-        public async Task<IActionResult> EndGame(int id, int winnerId)
+        public async Task<ActionResult> EndGame(int id, int winnerId)
         {
-            try
-            {
-                await _gamesService.EndGame(id, winnerId);
-                return Ok();
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
-            }
+            await _mediator.Send(new EndGameCommand(id, winnerId));
+            return Ok();
         }
     }
 }

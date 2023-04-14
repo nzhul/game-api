@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Server.Api.Models.View.UnitConfigurations;
-using Server.Data.Services.Abstraction;
+using Server.Application.Features.UnitConfigurations;
 using Server.Data.MapEntities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Server.Api.Controllers
 {
@@ -15,54 +12,17 @@ namespace Server.Api.Controllers
     [Route("api/unit-configurations")]
     public class UnitConfigurationsController : ControllerBase
     {
-        private IUnitConfigurationsService unitConfigurationService;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public UnitConfigurationsController(
-            IUnitConfigurationsService unitConfigurationService,
-            IMapper mapper)
+        public UnitConfigurationsController(IMediator mediator)
         {
-            this.unitConfigurationService = unitConfigurationService;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet("{creatureType?}")]
-        public IActionResult GetConfiguration(CreatureType? creatureType = null)
+        public async Task<Dictionary<CreatureType, UnitConfigurationDto>> GetConfiguration(CreatureType? creatureType = null)
         {
-            try
-            {
-                var configurations = this.unitConfigurationService.GetConfigurations(creatureType);
-
-                if (configurations != null)
-                {
-                    var configsToReturn = configurations.ProjectTo<UnitConfigurationView>(_mapper.ConfigurationProvider);
-                    return Ok(this.ConvertToDictionary(configsToReturn));
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            catch (Exception ex)
-            {
-                // LogException(ex);
-                return StatusCode(500, ex);
-            }
-        }
-
-        private Dictionary<CreatureType, UnitConfigurationView> ConvertToDictionary(IQueryable<UnitConfigurationView> configsToReturn)
-        {
-            Dictionary<CreatureType, UnitConfigurationView> configs = new Dictionary<CreatureType, UnitConfigurationView>();
-
-            foreach (var config in configsToReturn)
-            {
-                if (!configs.ContainsKey(config.Type))
-                {
-                    configs.Add(config.Type, config);
-                }
-            }
-
-            return configs;
+            return await _mediator.Send(new UnitConfigurationQuery(creatureType));
         }
     }
 }

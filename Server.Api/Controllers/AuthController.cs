@@ -1,9 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Server.Application.Features.Auth;
-using Server.Data.Users;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,15 +12,10 @@ namespace Server.Api.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly SignInManager<User> _signInManager;
-
         private readonly IMediator _mediator;
 
-        public AuthController(
-            SignInManager<User> signInManager,
-            IMediator mediator)
+        public AuthController(IMediator mediator)
         {
-            this._signInManager = signInManager;
             _mediator = mediator;
         }
 
@@ -37,14 +30,6 @@ namespace Server.Api.Controllers
         {
             await _mediator.Send(command, cancellationToken);
             return StatusCode((int)HttpStatusCode.Created);
-        }
-
-        [Authorize]
-        [HttpGet("logout")]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return Ok();
         }
     }
 }
