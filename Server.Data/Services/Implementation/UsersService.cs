@@ -143,33 +143,33 @@ namespace Server.Data.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task<string> SendFriendRequest(int senderId, string usernameOrEmail)
-        {
-            User sender = await GetUser(senderId);
-            User reciever = await GetUser(usernameOrEmail);
+        //public async Task<string> SendFriendRequest(int senderId, string usernameOrEmail)
+        //{
+        //    User sender = await GetUser(senderId);
+        //    User reciever = await GetUser(usernameOrEmail);
 
-            if (reciever == null)
-            {
-                return $"Cannot find user: {usernameOrEmail}";
-            }
+        //    if (reciever == null)
+        //    {
+        //        return $"Cannot find user: {usernameOrEmail}";
+        //    }
 
-            Friendship newFriendship = new Friendship
-            {
-                SenderId = sender.Id,
-                Sender = sender,
-                Reciever = reciever,
-                RecieverId = reciever.Id,
-                State = FriendshipState.Pending,
-                RequestTime = DateTime.UtcNow
-            };
+        //    Friendship newFriendship = new Friendship
+        //    {
+        //        SenderId = sender.Id,
+        //        Sender = sender,
+        //        Reciever = reciever,
+        //        RecieverId = reciever.Id,
+        //        State = FriendshipState.Pending,
+        //        RequestTime = DateTime.UtcNow
+        //    };
 
-            sender.SendFriendRequests.Add(newFriendship);
-            reciever.RecievedFriendRequests.Add(newFriendship);
-            _context.Friendships.Add(newFriendship);
-            await _context.SaveChangesAsync();
+        //    sender.SendFriendRequests.Add(newFriendship);
+        //    reciever.RecievedFriendRequests.Add(newFriendship);
+        //    _context.Friendships.Add(newFriendship);
+        //    await _context.SaveChangesAsync();
 
-            return null;
-        }
+        //    return null;
+        //}
 
         public async Task<string> SetOffline(int userId)
         {

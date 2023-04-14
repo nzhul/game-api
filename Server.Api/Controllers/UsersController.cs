@@ -40,22 +40,30 @@ namespace Server.Api.Controllers
             return await _mediator.Send(@params);
         }
 
-        [HttpPost("addfriend/{usernameOrEmail}")]
-        public async Task<IActionResult> SendFriendRequest(string usernameOrEmail)
+        [HttpPost("addfriend/{username}")]
+        public async Task<IActionResult> SendFriendRequest(string username)
         {
             int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            string result = await _usersService.SendFriendRequest(currentUserId, usernameOrEmail);
-
-            if (string.IsNullOrEmpty(result))
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(result);
-            }
+            await _mediator.Send(new SendFriendRequestCommand(currentUserId, username));
+            return Ok();
         }
+
+        //[HttpPost("addfriend/{usernameOrEmail}")]
+        //public async Task<IActionResult> SendFriendRequest(string usernameOrEmail)
+        //{
+        //    int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+        //    string result = await _usersService.SendFriendRequest(currentUserId, usernameOrEmail);
+
+        //    if (string.IsNullOrEmpty(result))
+        //    {
+        //        return Ok();
+        //    }
+        //    else
+        //    {
+        //        return BadRequest(result);
+        //    }
+        //}
 
         [HttpPost("approvefriend/{senderId}")]
         public async Task<IActionResult> ApproveFriendRequest(int senderId)

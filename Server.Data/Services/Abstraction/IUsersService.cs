@@ -11,13 +11,13 @@ namespace Server.Data.Services.Abstraction
 
         Task<User> GetUser(int id);
 
-        /// <summary>
-        /// Creates new Friendship entity and set its status to None
-        /// </summary>
-        /// <param name="senderId">The one who sends the friend request</param>
-        /// <param name="recieverUsernameOrEmail">The one who will recieve the friend request</param>
-        /// <returns>Null if success. Error message on fail</returns>
-        Task<string> SendFriendRequest(int senderId, string recieverUsernameOrEmail);
+        ///// <summary>
+        ///// Creates new Friendship entity and set its status to None
+        ///// </summary>
+        ///// <param name="senderId">The one who sends the friend request</param>
+        ///// <param name="recieverUsernameOrEmail">The one who will recieve the friend request</param>
+        ///// <returns>Null if success. Error message on fail</returns>
+        //Task<string> SendFriendRequest(int senderId, string recieverUsernameOrEmail);
 
         /// <summary>
         /// Sets the status of the request to Approved

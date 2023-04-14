@@ -9,6 +9,11 @@ using Server.Data.Users;
 
 namespace Server.Api
 {
+    // TODO: Refactor Program.cs and Startup.cs to use only one file.
+    // See CleanArchitecture for reference
+    // TODO: Extract the rest of the service configuration into proper places > API and Data projects
+    // TODO: Check and refactor the Migrate and Seed logic like CleanArchitecture.
+    // TODO: Remove /api/ from the route!
     public class Program
     {
         public static void Main(string[] args)
