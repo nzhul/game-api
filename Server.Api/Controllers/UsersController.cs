@@ -1,14 +1,15 @@
+using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Server.Application.Features;
+using Server.Application.Features.Users;
+using Server.Application.Features.Users.Models;
+using Server.Data.Services.Abstraction;
+using Server.Data.Users;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Server.Api.Helpers;
-using Server.Api.Models.View;
-using Server.Application.Features.Common.Models;
-using Server.Data.Services.Abstraction;
-using Server.Data.Users;
 
 namespace Server.Api.Controllers
 {
@@ -18,37 +19,25 @@ namespace Server.Api.Controllers
     {
         private readonly IUsersService _usersService;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public UsersController(IUsersService usersService, IMapper mapper)
+        public UsersController(IUsersService usersService, IMapper mapper, IMediator mediator)
         {
             _usersService = usersService;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet("{id}", Name = "GetUser")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<ActionResult<UserDetailedDto>> GetUser(int id)
         {
-            User user = await _usersService.GetUser(id);
-
-            UserDetailedDto userToReturn = _mapper.Map<UserDetailedDto>(user);
-
-            return Ok(userToReturn);
+            return await _mediator.Send(new GetUserQuery(id));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers(UserParams userParams)
+        public async Task<ActionResult<ListResult<UserListDto>>> GetUsers([FromQuery] GetUsersQuery @params)
         {
-            int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            userParams.UserId = currentUserId;
-
-            Server.Data.Pagination.PagedList<User> users = await _usersService.GetUsers(userParams);
-
-            IEnumerable<UserListDto> usersToReturn = _mapper.Map<IEnumerable<UserListDto>>(users);
-
-            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
-
-            return Ok(usersToReturn);
+            return await _mediator.Send(@params);
         }
 
         [HttpPost("addfriend/{usernameOrEmail}")]

@@ -3,7 +3,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Server.Application.Features.Common.Models;
 using Server.Common.Enums;
 using Server.Common.Errors;
 using Server.Common.Exceptions;
@@ -19,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Server.Common;
+using Server.Application.Features.Users.Models;
 
 namespace Server.Application.Features.Auth
 {

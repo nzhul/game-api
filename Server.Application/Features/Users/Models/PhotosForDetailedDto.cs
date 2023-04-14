@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Server.Common.Mappings;
+using Server.Data.Users;
+using System;
 
-namespace Server.Api.Models.View
+namespace Server.Application.Features.Users.Models
 {
-    public class PhotosForDetailedDto
+    public class PhotosForDetailedDto : IMapFrom<Photo>
     {
         public int Id { get; set; }
 

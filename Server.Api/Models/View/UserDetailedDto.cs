@@ -1,42 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//using System;
+//using System.Collections.Generic;
 
-namespace Server.Api.Models.View
-{
-    public class UserDetailedDto
-    {
-        public int Id { get; set; }
+//namespace Server.Api.Models.View
+//{
+//    public class UserDetailedDto
+//    {
+//        public int Id { get; set; }
 
-        public int MMR { get; set; }
+//        public int MMR { get; set; }
 
-        public string Username { get; set; }
+//        public string Username { get; set; }
 
-        public string Gender { get; set; }
+//        public string Gender { get; set; }
 
-        public int Age { get; set; }
+//        public int Age { get; set; }
 
-        public string KnownAs { get; set; }
+//        public string KnownAs { get; set; }
 
-        public DateTime Created { get; set; }
+//        public DateTime Created { get; set; }
 
-        public DateTime LastActive { get; set; }
+//        public DateTime LastActive { get; set; }
 
-        public string Introduction { get; set; }
+//        public string Introduction { get; set; }
 
-        public string LookingFor { get; set; }
+//        public string LookingFor { get; set; }
 
-        public string Interests { get; set; }
+//        public string Interests { get; set; }
 
-        public string City { get; set; }
+//        public string City { get; set; }
 
-        public string Country { get; set; }
+//        public string Country { get; set; }
 
-        public string PhotoUrl { get; set; }
+//        public string PhotoUrl { get; set; }
 
-        public int GameId { get; set; }
+//        public int GameId { get; set; }
 
-        public Guid? BattleId { get; set; }
+//        public Guid? BattleId { get; set; }
 
-        public ICollection<PhotosForDetailedDto> Photos { get; set; }
-    }
-}
+//        public ICollection<PhotosForDetailedDto> Photos { get; set; }
+//    }
+//}

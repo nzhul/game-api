@@ -3,7 +3,8 @@ using AutoMapper;
 using Server.Api.Models.Input;
 using Server.Api.Models.View;
 using Server.Api.Models.View.UnitConfigurations;
-using Server.Application.Features.Common.Models;
+using Server.Application.Features.Users;
+using Server.Application.Features.Users.Models;
 using Server.Data.UnitConfigurations;
 using Server.Data.Users;
 

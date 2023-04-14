@@ -2,7 +2,7 @@
 using Server.Data.Users;
 using System;
 
-namespace Server.Application.Features.Common.Models
+namespace Server.Application.Features.Users.Models
 {
     public class UserListDto : IMapFrom<User>
     {
