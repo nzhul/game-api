@@ -2,6 +2,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Server.Common;
 using Server.Common.Enums;
 using Server.Common.Errors;
@@ -19,11 +20,16 @@ namespace Server.Application.Features.Auth
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly ILogger<RegisterHandler> _logger;
 
-        public RegisterHandler(UserManager<User> userManager, IMapper mapper)
+        public RegisterHandler(
+            UserManager<User> userManager, 
+            IMapper mapper, 
+            ILogger<RegisterHandler> logger)
         {
             _mapper = mapper;
             _userManager = userManager;
+            _logger = logger;
         }
 
         public async Task Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -44,6 +50,8 @@ namespace Server.Application.Features.Auth
                         errors.ToArray())
                     );
             }
+
+            _logger.LogInformation($"New Registration with username: `{request.Username}`!");
         }
     }
 

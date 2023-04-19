@@ -17,6 +17,8 @@ namespace Server.Api
         {
             var key = Encoding.ASCII.GetBytes(configuration.GetSection("AppSettings:Token").Value);
 
+            //services.AddLogging(c => c.AddSimpleConsole());
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

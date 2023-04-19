@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Server.Application.Features.Users.Models;
 using Server.Common;
@@ -28,21 +29,24 @@ namespace Server.Application.Features.Auth
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
+        private readonly ILogger<LoginHandler> _logger;
 
         public LoginHandler(UserManager<User> userManager,
             SignInManager<User> signInManager,
             IConfiguration config,
-            IMapper mapper)
+            IMapper mapper,
+            ILogger<LoginHandler> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _logger = logger;
             _config = config;
         }
 
-        public async Task<LoginResult> Handle(LoginQuery query, CancellationToken cancellationToken)
+        public async Task<LoginResult> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            var dbUser = await _userManager.FindByNameAsync(query.Username);
+            var dbUser = await _userManager.FindByNameAsync(request.Username);
 
             if (dbUser == null)
             {
@@ -54,14 +58,16 @@ namespace Server.Application.Features.Auth
                 //throw new RestException(HttpStatusCode.NotFound, new RestError(RestErrorCode.BadArgument, nameof(User), "Not Found"));
             }
 
-            var loginResult = await _signInManager.CheckPasswordSignInAsync(dbUser, query.Password, false);
+            var loginResult = await _signInManager.CheckPasswordSignInAsync(dbUser, request.Password, false);
 
             if (loginResult.Succeeded)
             {
                 var appUser = await _userManager.Users
-                    .FirstOrDefaultAsync(u => u.NormalizedUserName == query.Username.ToUpper(), cancellationToken);
+                    .FirstOrDefaultAsync(u => u.NormalizedUserName == request.Username.ToUpper(), cancellationToken);
 
                 var userToReturn = _mapper.Map<UserListDto>(appUser);
+
+                _logger.LogInformation($"`{request.Username}` generated auth token!");
 
                 return new LoginResult(await GenerateJwtToken(appUser), userToReturn);
             }
