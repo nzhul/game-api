@@ -43,62 +43,22 @@ namespace Server.Api.Controllers
         [HttpPost("addfriend/{username}")]
         public async Task<IActionResult> SendFriendRequest(string username)
         {
-            int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _mediator.Send(new SendFriendRequestCommand(currentUserId, username));
+            await _mediator.Send(new SendFriendRequestCommand(username));
             return Ok();
         }
 
-        //[HttpPost("addfriend/{usernameOrEmail}")]
-        //public async Task<IActionResult> SendFriendRequest(string usernameOrEmail)
-        //{
-        //    int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-        //    string result = await _usersService.SendFriendRequest(currentUserId, usernameOrEmail);
-
-        //    if (string.IsNullOrEmpty(result))
-        //    {
-        //        return Ok();
-        //    }
-        //    else
-        //    {
-        //        return BadRequest(result);
-        //    }
-        //}
-
-        [HttpPost("approvefriend/{senderId}")]
-        public async Task<IActionResult> ApproveFriendRequest(int senderId)
+        [HttpPost("approvefriend/{requestId}")]
+        public async Task<IActionResult> ApproveFriendRequest(int requestId)
         {
-            int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value); // currentUserId is the reciever
-
-            int recieverId = currentUserId;
-
-            string result = await _usersService.ApproveFriendRequest(senderId, recieverId);
-
-            if (string.IsNullOrEmpty(result))
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(result);
-            }
+            await _mediator.Send(new ApproveFriendRequestCommand(requestId));
+            return Ok();
         }
 
-        [HttpPost("block/{userId}")]
-        public async Task<IActionResult> BlockUser(int userId)
+        [HttpPost("block/{username}")]
+        public async Task<IActionResult> BlockUser(string username)
         {
-            int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            string result = await _usersService.BlockUser(currentUserId, userId);
-
-            if (string.IsNullOrEmpty(result))
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(result);
-            }
+            await _mediator.Send(new BlockUserCommand(username));
+            return Ok();
         }
 
         [HttpGet("{userId}/friends")]

@@ -268,6 +268,8 @@ namespace Server.Data.Migrations
                 name: "Friendships",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SenderId = table.Column<int>(type: "integer", nullable: false),
                     RecieverId = table.Column<int>(type: "integer", nullable: false),
                     RequestTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
@@ -276,7 +278,7 @@ namespace Server.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Friendships", x => new { x.SenderId, x.RecieverId });
+                    table.PrimaryKey("PK_Friendships", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Friendships_AspNetUsers_RecieverId",
                         column: x => x.RecieverId,
@@ -412,6 +414,12 @@ namespace Server.Data.Migrations
                 name: "IX_Friendships_RecieverId",
                 table: "Friendships",
                 column: "RecieverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Friendships_SenderId_RecieverId",
+                table: "Friendships",
+                columns: new[] { "SenderId", "RecieverId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_RecipientId",

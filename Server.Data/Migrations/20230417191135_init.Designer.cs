@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230414182009_init")]
+    [Migration("20230417191135_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -306,24 +306,33 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("Server.Data.Users.Friendship", b =>
                 {
-                    b.Property<int>("SenderId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.Property<int>("RecieverId")
-                        .HasColumnType("integer");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("BecameFriendsTime")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int>("RecieverId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("RequestTime")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
-                    b.HasKey("SenderId", "RecieverId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RecieverId");
+
+                    b.HasIndex("SenderId", "RecieverId")
+                        .IsUnique();
 
                     b.ToTable("Friendships");
                 });

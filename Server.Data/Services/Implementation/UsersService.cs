@@ -15,56 +15,6 @@ namespace Server.Data.Services.Implementation
         {
         }
 
-        public async Task<string> ApproveFriendRequest(int senderId, int recieverId)
-        {
-            Friendship friendship = await _context.Friendships.FirstOrDefaultAsync(x => x.SenderId == senderId && x.RecieverId == recieverId);
-            if (friendship != null)
-            {
-                friendship.State = FriendshipState.Approved;
-                await _context.SaveChangesAsync();
-
-                return null;
-            }
-
-            return "Cannot find friend request!";
-        }
-
-        public async Task<string> BlockUser(int senderId, int recieverId)
-        {
-            Friendship friendship = await _context.Friendships
-                .FirstOrDefaultAsync(x => (x.SenderId == senderId && x.RecieverId == recieverId) || (x.SenderId == recieverId && x.RecieverId == senderId));
-
-            if (friendship == null)
-            {
-                User sender = await GetUser(senderId);
-                User reciever = await GetUser(recieverId);
-
-                if (reciever == null)
-                {
-                    return $"Cannot find user with id: {recieverId}";
-                }
-
-                friendship = new Friendship
-                {
-                    SenderId = sender.Id,
-                    Sender = sender,
-                    Reciever = reciever,
-                    RecieverId = reciever.Id,
-                    State = FriendshipState.Blocked,
-                    RequestTime = DateTime.UtcNow
-                };
-
-                sender.SendFriendRequests.Add(friendship);
-                reciever.RecievedFriendRequests.Add(friendship);
-                _context.Friendships.Add(friendship);
-            }
-
-            friendship.State = FriendshipState.Blocked;
-            await _context.SaveChangesAsync();
-
-            return null;
-        }
-
         public async Task<IEnumerable<User>> GetFriends(int userId)
         {
             IEnumerable<User> friends = null;
@@ -103,73 +53,10 @@ namespace Server.Data.Services.Implementation
             return dbUser;
         }
 
-        //public async Task<PagedList<User>> GetUsers(ListingParams userParams)
-        //{
-        //    IQueryable<User> users = _context.Users.Include(p => p.Photos).OrderByDescending(u => u.LastActive).AsQueryable();
-
-        //    users = users.Where(u => u.Id != userParams.UserId);
-
-        //    if (!string.IsNullOrEmpty(userParams.Gender) && userParams.Gender != "undefined")
-        //    {
-        //        users = users.Where(u => u.Gender == userParams.Gender);
-        //    }
-
-        //    if (userParams.MinAge != 18 || userParams.MaxAge != 99)
-        //    {
-        //        DateTime min = DateTime.Today.AddYears(-userParams.MaxAge - 1);
-        //        DateTime max = DateTime.Today.AddYears(-userParams.MinAge);
-
-        //        users = users.Where(u => u.DateOfBirth >= min && u.DateOfBirth <= max);
-        //    }
-
-        //    if (!string.IsNullOrEmpty(userParams.OrderBy))
-        //    {
-        //        switch (userParams.OrderBy)
-        //        {
-        //            case "created":
-        //                users = users.OrderByDescending(u => u.CreatedAt);
-        //                break;
-        //            default:
-        //                users = users.OrderByDescending(u => u.LastActive);
-        //                break;
-        //        }
-        //    }
-
-        //    return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
-        //}
-
         public async Task<string> RejectFriendRequest(int requestId, int recieverId)
         {
             throw new NotImplementedException();
         }
-
-        //public async Task<string> SendFriendRequest(int senderId, string usernameOrEmail)
-        //{
-        //    User sender = await GetUser(senderId);
-        //    User reciever = await GetUser(usernameOrEmail);
-
-        //    if (reciever == null)
-        //    {
-        //        return $"Cannot find user: {usernameOrEmail}";
-        //    }
-
-        //    Friendship newFriendship = new Friendship
-        //    {
-        //        SenderId = sender.Id,
-        //        Sender = sender,
-        //        Reciever = reciever,
-        //        RecieverId = reciever.Id,
-        //        State = FriendshipState.Pending,
-        //        RequestTime = DateTime.UtcNow
-        //    };
-
-        //    sender.SendFriendRequests.Add(newFriendship);
-        //    reciever.RecievedFriendRequests.Add(newFriendship);
-        //    _context.Friendships.Add(newFriendship);
-        //    await _context.SaveChangesAsync();
-
-        //    return null;
-        //}
 
         public async Task<string> SetOffline(int userId)
         {

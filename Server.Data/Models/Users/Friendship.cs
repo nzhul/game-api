@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Data.Users
 {
-    public class Friendship
+    public class Friendship : Entity
     {
         public int SenderId { get; set; }
 

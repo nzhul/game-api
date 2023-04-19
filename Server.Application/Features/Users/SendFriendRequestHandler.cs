@@ -23,15 +23,19 @@ namespace Server.Application.Features.Users
     public class SendFriendRequestHandler : IRequestHandler<SendFriendRequestCommand>
     {
         private readonly DataContext _context;
+        private readonly ISessionData _sessionData;
 
-        public SendFriendRequestHandler(DataContext context)
+        public SendFriendRequestHandler(
+            DataContext context,
+            ISessionData sessionData)
         {
             _context = context;
+            _sessionData = sessionData;
         }
 
         public async Task Handle(SendFriendRequestCommand request, CancellationToken cancellationToken)
         {
-            var sender = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.SenderId, cancellationToken);
+            var sender = await _context.Users.FirstOrDefaultAsync(u => u.Id == _sessionData.UserId, cancellationToken);
             var reciever = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.ReceiverUsername, cancellationToken);
 
             if (reciever == null)
@@ -47,7 +51,7 @@ namespace Server.Application.Features.Users
                 throw new RestException(HttpStatusCode.BadRequest, new RestError(RestErrorCode.BadArgument, nameof(User), "Friend request already sent!"));
             }
 
-            Friendship newFriendship = new Friendship
+            var newFriendship = new Friendship
             {
                 SenderId = sender.Id,
                 Sender = sender,
@@ -68,9 +72,6 @@ namespace Server.Application.Features.Users
     {
         public SendFriendRequestCommandValidator()
         {
-            RuleFor(r => r.SenderId)
-                .GreaterThanOrEqualTo(1);
-
             RuleFor(r => r.ReceiverUsername)
                 .NotEmpty()
                 .MinimumLength(Constants.MinUsernameLength)
@@ -79,5 +80,5 @@ namespace Server.Application.Features.Users
         }
     }
 
-    public record SendFriendRequestCommand(int SenderId, string ReceiverUsername) : IRequest;
+    public record SendFriendRequestCommand(string ReceiverUsername) : IRequest;
 }

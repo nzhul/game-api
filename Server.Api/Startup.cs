@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Server.Application;
+using Server.Common;
 using Server.Common.Middlewares;
 using Server.Data;
 using Server.Data.Services.Abstraction;
@@ -76,6 +77,7 @@ namespace Server.Api
 
 
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<ISessionData, SessionData>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

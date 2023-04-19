@@ -42,7 +42,8 @@ namespace Server.Data
             base.OnModelCreating(builder);
 
             builder.Entity<Friendship>()
-                .HasKey(fs => new { fs.SenderId, fs.RecieverId });
+                .HasIndex(fs => new { fs.SenderId, fs.RecieverId })
+                .IsUnique();
 
             builder.Entity<Friendship>()
                 .HasOne(u => u.Sender)
