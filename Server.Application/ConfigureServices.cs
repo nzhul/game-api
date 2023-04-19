@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Server.Api.Behaviours;
 using Server.Application.Features.Auth;
 using Server.Application.Mappings;
+using Server.Common;
 
 namespace Server.Application
 {
@@ -18,6 +19,8 @@ namespace Server.Application
                 cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             });
+            services.AddScoped<ISessionData, SessionData>();
+
             return services;
         }
     }

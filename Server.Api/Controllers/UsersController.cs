@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Server.Application.Features;
 using Server.Application.Features.Users;
 using Server.Application.Features.Users.Models;
-using Server.Data.Services.Abstraction;
 using System.Threading.Tasks;
 
 namespace Server.Api.Controllers
@@ -13,12 +12,10 @@ namespace Server.Api.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly IUsersService _usersService;
         private readonly IMediator _mediator;
 
-        public UsersController(IUsersService usersService, IMediator mediator)
+        public UsersController(IMediator mediator)
         {
-            _usersService = usersService;
             _mediator = mediator;
         }
 
