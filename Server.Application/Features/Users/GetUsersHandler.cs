@@ -27,7 +27,7 @@ namespace Server.Application.Features.Users
         {
             var query = _context.Users.OrderByDescending(u => u.LastActive).AsQueryable();
 
-            var totalCount = await query.CountAsync();
+            var totalCount = await query.CountAsync(cancellationToken: cancellationToken);
 
             query = query
                 .Skip(request.Skip)
@@ -36,7 +36,7 @@ namespace Server.Application.Features.Users
 
             var projected = await query
                 .ProjectTo<UserListDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             return new ListResult<UserListDto>()
             {

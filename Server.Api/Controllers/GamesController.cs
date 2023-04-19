@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Server.Api.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
+    [Authorize(Policy = "RequireAdmin")]
+    [Route("[controller]")]
     public class GamesController : ControllerBase
     {
         private readonly IMediator _mediator;

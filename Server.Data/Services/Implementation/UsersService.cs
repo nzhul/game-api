@@ -15,22 +15,6 @@ namespace Server.Data.Services.Implementation
         {
         }
 
-        public async Task<IEnumerable<User>> GetFriends(int userId)
-        {
-            IEnumerable<User> friends = null;
-
-            User dbUser = await GetUser(userId);
-            if (dbUser != null)
-            {
-                friends = _context.Users
-                    .Where(u => u.RecievedFriendRequests.Any(f => f.SenderId == userId && f.RecieverId == u.Id && f.State == FriendshipState.Approved) ||
-                           u.SendFriendRequests.Any(f => f.SenderId == u.Id && f.RecieverId == userId && f.State == FriendshipState.Approved))
-                    .ToList();
-            }
-
-            return friends;
-        }
-
         public async Task<User> GetUser(int id)
         {
             // TODO: i should not use this on all places because includes the photos.

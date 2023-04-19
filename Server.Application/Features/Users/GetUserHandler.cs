@@ -28,12 +28,8 @@ namespace Server.Application.Features.Users
 
         public async Task<UserDetailedDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId);
-
-            if (dbUser == null)
-            {
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken) ??
                 throw new RestException(HttpStatusCode.NotFound, new RestError(RestErrorCode.BadArgument, nameof(User), "Not Found"));
-            }
 
             return _mapper.Map<UserDetailedDto>(dbUser);
         }

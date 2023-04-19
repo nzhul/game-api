@@ -12,7 +12,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Server.Application.Features.Users
+namespace Server.Application.Features.Me
 {
     /// <summary>
     /// Creates new Friendship entity and set its status to None
@@ -35,16 +35,12 @@ namespace Server.Application.Features.Users
 
         public async Task Handle(SendFriendRequestCommand request, CancellationToken cancellationToken)
         {
-            var sender = await _context.Users.FirstOrDefaultAsync(u => u.Id == _sessionData.UserId, cancellationToken);
-            var reciever = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.ReceiverUsername, cancellationToken);
-
-            if (reciever == null)
-            {
+            var me = await _context.Users.FirstOrDefaultAsync(u => u.Id == _sessionData.UserId, cancellationToken);
+            var reciever = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.ReceiverUsername, cancellationToken) ??
                 throw new RestException(HttpStatusCode.NotFound, new RestError(RestErrorCode.BadArgument, nameof(User), "Not Found"));
-            }
 
             var alreadyExist = await _context.Friendships
-                .AnyAsync(f => f.SenderId == sender.Id && f.RecieverId == reciever.Id, cancellationToken);
+                .AnyAsync(f => f.SenderId == me.Id && f.RecieverId == reciever.Id, cancellationToken);
 
             if (alreadyExist)
             {
@@ -53,15 +49,15 @@ namespace Server.Application.Features.Users
 
             var newFriendship = new Friendship
             {
-                SenderId = sender.Id,
-                Sender = sender,
+                SenderId = me.Id,
+                Sender = me,
                 Reciever = reciever,
                 RecieverId = reciever.Id,
                 State = FriendshipState.Pending,
                 RequestTime = DateTime.UtcNow
             };
 
-            sender.SendFriendRequests.Add(newFriendship);
+            me.SendFriendRequests.Add(newFriendship);
             reciever.RecievedFriendRequests.Add(newFriendship);
             _context.Friendships.Add(newFriendship);
             await _context.SaveChangesAsync(cancellationToken);

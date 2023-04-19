@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Server.Api.Controllers
 {
-    [Authorize]
-    [Route("api/unit-configurations")]
+    [Authorize(Policy = "RequireAdmin")]
+    [Route("unit-configurations")]
     public class UnitConfigurationsController : ControllerBase
     {
         private readonly IMediator _mediator;

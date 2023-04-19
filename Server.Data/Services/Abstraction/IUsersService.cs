@@ -1,5 +1,4 @@
 using Server.Data.Users;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Server.Data.Services.Abstraction
@@ -15,8 +14,6 @@ namespace Server.Data.Services.Abstraction
         /// <param name="recieverId">The id of the one who is recieving the friend request. Will be used for validation.</param>
         /// <returns>Null if success. Error message on fail</returns>
         Task<string> RejectFriendRequest(int requestId, int recieverId);
-
-        Task<IEnumerable<User>> GetFriends(int userId);
 
         /// <summary>
         /// Sets the user as offline

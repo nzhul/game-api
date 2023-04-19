@@ -12,7 +12,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Server.Application.Features.Users
+namespace Server.Application.Features.Me
 {
     public class BlockUserHandler : IRequestHandler<BlockUserCommand>
     {
@@ -30,12 +30,8 @@ namespace Server.Application.Features.Users
         public async Task Handle(BlockUserCommand request, CancellationToken cancellationToken)
         {
             var me = await _context.Users.FirstOrDefaultAsync(u => u.Id == _sessionData.UserId, cancellationToken);
-            var userToBlock = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.UsernameToBlock, cancellationToken);
-
-            if (userToBlock == null)
-            {
+            var userToBlock = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.UsernameToBlock, cancellationToken) ??
                 throw new RestException(HttpStatusCode.NotFound, new RestError(RestErrorCode.BadArgument, nameof(User), "Not Found"));
-            }
 
             var friendship = await _context.Friendships
                 .FirstOrDefaultAsync(f =>

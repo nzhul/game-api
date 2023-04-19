@@ -6,12 +6,6 @@
   <GenerateDocumentationFile>true</GenerateDocumentationFile>
   <NoWarn>$(NoWarn);1591</NoWarn>
 </PropertyGroup>
-<ItemGroup>
-  <Compile Remove="Models\View\Avatars\**" />
-  <Content Remove="Models\View\Avatars\**" />
-  <EmbeddedResource Remove="Models\View\Avatars\**" />
-  <None Remove="Models\View\Avatars\**" />
-</ItemGroup>
   <ItemGroup>
     <Content Remove="SeedData\UnitConfigurations.json" />
     <Content Remove="SeedData\UserSeedData.json" />

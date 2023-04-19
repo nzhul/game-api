@@ -11,7 +11,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Server.Application.Features.Users
+namespace Server.Application.Features.Me
 {
     public class ApproveFriendRequestHandler : IRequestHandler<ApproveFriendRequestCommand>
     {
@@ -29,12 +29,8 @@ namespace Server.Application.Features.Users
         public async Task Handle(ApproveFriendRequestCommand request, CancellationToken cancellationToken)
         {
             var dbFriendship = await _context.Friendships
-                .FirstOrDefaultAsync(f => f.Id == request.RequestId && f.RecieverId == _sessionData.UserId, cancellationToken: cancellationToken);
-
-            if (dbFriendship == null)
-            {
-                throw new RestException(HttpStatusCode.NotFound, new RestError(RestErrorCode.BadArgument, nameof(Friendship), "Not Found"));
-            }
+                .FirstOrDefaultAsync(f => f.Id == request.RequestId && f.RecieverId == _sessionData.UserId, cancellationToken: cancellationToken) ??
+                    throw new RestException(HttpStatusCode.NotFound, new RestError(RestErrorCode.BadArgument, nameof(Friendship), "Not Found"));
 
             if (dbFriendship.State == FriendshipState.Approved)
             {
