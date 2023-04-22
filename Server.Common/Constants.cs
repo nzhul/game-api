@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System;
+﻿using System;
+using System.Linq;
 
 namespace Server.Common
 {
@@ -7,7 +7,7 @@ namespace Server.Common
     {
         public const int MinUsernameLength = 3;
         public const int MaxUsernameLength = 16;
-        public const int MinPasswordLength = 3;
+        public const int MinPasswordLength = 4;
         public const int MaxPasswordLength = 50;
 
 
@@ -34,8 +34,7 @@ namespace Server.Common
         //public static string StrongPasswordECMAScriptRegex =>
         //    $@"^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+={{}}\[\]\\|;:',.?\/`~><""]).{{{MinPasswordLength},{MaxPasswordLength}}}$";
 
-        public static string EmailRegexPattern = @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[-_0-9a-z])@))" +
-            @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
+        public static string EmailRegexPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
 
         public static string UsernameRegex = "^[A-Za-z]{3,16}$";
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Server.Common.Errors;
 using Server.Common.Exceptions;
 using System;
@@ -42,11 +43,19 @@ namespace Server.Common.Middlewares
             {
                 case RestException re:
                     statusCode = (int)re.Code;
-                    responseBody = JsonConvert.SerializeObject(new RestErrorResponseDto(re));
+                    responseBody = JsonConvert.SerializeObject(new RestErrorResponseDto(re),
+                        new JsonSerializerSettings
+                        {
+                            ContractResolver = new CamelCasePropertyNamesContractResolver()
+                        });
                     break;
                 default:
                     statusCode = (int)HttpStatusCode.InternalServerError;
-                    responseBody = JsonConvert.SerializeObject(new RestErrorResponseDto(context.Request.Path, ex));
+                    responseBody = JsonConvert.SerializeObject(new RestErrorResponseDto(context.Request.Path, ex),
+                        new JsonSerializerSettings
+                        {
+                            ContractResolver = new CamelCasePropertyNamesContractResolver()
+                        });
                     break;
             }
 
