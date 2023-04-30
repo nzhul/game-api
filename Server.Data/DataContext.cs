@@ -6,6 +6,7 @@ using Server.Data.Items;
 using Server.Data.UnitConfigurations;
 using Server.Data.Users;
 using System;
+using System.Reflection;
 
 namespace Server.Data
 {
@@ -39,62 +40,9 @@ namespace Server.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
             base.OnModelCreating(builder);
-
-            builder.Entity<Friendship>()
-                .HasIndex(fs => new { fs.SenderId, fs.RecieverId })
-                .IsUnique();
-
-            builder.Entity<Friendship>()
-                .HasOne(u => u.Sender)
-                .WithMany(fs => fs.SendFriendRequests)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasForeignKey(u => u.SenderId);
-
-            builder.Entity<Friendship>()
-                .HasOne(u => u.Reciever)
-                .WithMany(fs => fs.RecievedFriendRequests)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasForeignKey(u => u.RecieverId);
-
-            builder.Entity<UserRole>(userRole =>
-            {
-                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
-
-                userRole.HasOne(ur => ur.Role)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RoleId)
-                .IsRequired();
-
-                userRole.HasOne(ur => ur.User)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.UserId)
-                .IsRequired();
-            });
-
-            builder.Entity<Message>()
-                .HasOne(u => u.Sender)
-                .WithMany(u => u.MessagesSent)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Message>()
-                .HasOne(u => u.Recipient)
-                .WithMany(u => u.MessagesRecieved)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<UnitConfiguration>()
-                .HasIndex(x => x.Type)
-                .IsUnique();
-
-            builder.Entity<UnitConfiguration>()
-                .HasMany(x => x.Abilities)
-                .WithMany(x => x.UnitConfigurations)
-                .UsingEntity(x => x.ToTable("UnitConfigurationAbilities"));
-
-            builder.Entity<UnitConfiguration>()
-                .HasMany(x => x.Upgrades)
-                .WithMany(x => x.UnitConfigurations)
-                .UsingEntity(x => x.ToTable("UnitConfigurationUpgrades"));
         }
     }
 }

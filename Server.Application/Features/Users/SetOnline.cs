@@ -40,7 +40,7 @@ namespace Server.Application.Features.Users
                 .GreaterThanOrEqualTo(1);
 
             RuleFor(r => r.ConnectionId)
-                .GreaterThanOrEqualTo(1);
+                .GreaterThanOrEqualTo(0);
         }
     }
 
