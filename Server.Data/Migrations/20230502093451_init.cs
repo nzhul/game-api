@@ -108,6 +108,22 @@ namespace Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Releases",
+                columns: table => new
+                {
+                    Version = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ReleaseNotes = table.Column<string>(type: "text", nullable: true),
+                    IsPublic = table.Column<bool>(type: "boolean", nullable: false),
+                    DownloadUrl = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Releases", x => x.Version);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UnitConfigurations",
                 columns: table => new
                 {
@@ -499,6 +515,9 @@ namespace Server.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Messages");
+
+            migrationBuilder.DropTable(
+                name: "Releases");
 
             migrationBuilder.DropTable(
                 name: "UnitConfigurationAbilities");

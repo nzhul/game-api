@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230430125802_init")]
+    [Migration("20230502093451_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -164,6 +164,31 @@ namespace Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ItemBlueprints");
+                });
+
+            modelBuilder.Entity("Server.Data.Models.Releases.Release", b =>
+                {
+                    b.Property<string>("Version")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DownloadUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ReleaseNotes")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Version");
+
+                    b.ToTable("Releases");
                 });
 
             modelBuilder.Entity("Server.Data.UnitConfigurations.Ability", b =>

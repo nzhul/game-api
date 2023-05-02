@@ -163,6 +163,31 @@ namespace Server.Data.Migrations
                     b.ToTable("ItemBlueprints");
                 });
 
+            modelBuilder.Entity("Server.Data.Models.Releases.Release", b =>
+                {
+                    b.Property<string>("Version")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DownloadUrl")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ReleaseNotes")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Version");
+
+                    b.ToTable("Releases");
+                });
+
             modelBuilder.Entity("Server.Data.UnitConfigurations.Ability", b =>
                 {
                     b.Property<string>("Code")

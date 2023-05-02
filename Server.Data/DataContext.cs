@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Server.Data.Games;
 using Server.Data.Items;
+using Server.Data.Models.Releases;
 using Server.Data.UnitConfigurations;
 using Server.Data.Users;
 using System;
@@ -37,6 +38,9 @@ namespace Server.Data
         public DbSet<Ability> Abilities { get; set; }
 
         public DbSet<Upgrade> Upgrades { get; set; }
+
+        // Infrastructure
+        public DbSet<Release> Releases { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

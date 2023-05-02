@@ -1,0 +1,18 @@
+﻿[
+  {
+    "Version": "0.0.1",
+    "Type": "GameClient",
+    "ReleaseDate": "2019-01-01",
+    "ReleaseNotes": "Ancient warriors Alpha initial release",
+    "IsPublic": true,
+    "DownloadUrl": "https://github.com/nzhul/tic-tac-toe-online/releases/download/v15/build-StandaloneWindows64-v15.zip"
+  },
+  {
+    "Version": "0.0.2",
+    "Type": "GameClient",
+    "ReleaseDate": "2019-02-02",
+    "ReleaseNotes": "Another test release",
+    "IsPublic": true,
+    "DownloadUrl": "https://github.com/nzhul/tic-tac-toe-online/releases/download/v15/build-StandaloneWindows64-v15.zip"
+  }
+]

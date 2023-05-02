@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Server.Api.Auth;
+using Server.Common.Settings;
 using System.Text;
 
 namespace Server.Api
@@ -16,8 +19,6 @@ namespace Server.Api
         public static IServiceCollection AddAPIServices(this IServiceCollection services, IConfiguration configuration)
         {
             var key = Encoding.ASCII.GetBytes(configuration.GetSection("AppSettings:Token").Value);
-
-            //services.AddLogging(c => c.AddSimpleConsole());
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -38,6 +39,9 @@ namespace Server.Api
                 options.AddPolicy("RequireModerator", policy => policy.RequireRole("Admin", "Moderator"));
                 options.AddPolicy("VipOnly", policy => policy.RequireRole("Admin", "VIP"));
             });
+
+            services.AddAuthentication()
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicAuthenticationDefaults.AuthenticationScheme, null);
 
             services.AddControllers(options =>
             {
@@ -64,6 +68,9 @@ namespace Server.Api
                     //.WithOrigins("http://localhost:3000")
                 });
             });
+
+            var basicCredentialsSection = configuration.GetSection(nameof(BasicCredentials));
+            services.Configure<BasicCredentials>(basicCredentialsSection);
 
             return services;
         }
