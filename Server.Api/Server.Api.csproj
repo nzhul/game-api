@@ -36,6 +36,9 @@
     <ProjectReference Include="..\Server.Data\Server.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="SeedData\Releases.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="SeedData\Abilities.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

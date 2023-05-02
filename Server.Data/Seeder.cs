@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Server.Data.MapEntities;
+using Server.Data.Models.Releases;
 using Server.Data.UnitConfigurations;
 using Server.Data.Users;
 using System;
@@ -82,6 +83,17 @@ namespace Server.Data
                     _context.UnitConfigurations.Add(config);
                 }
 
+                _context.SaveChanges();
+            }
+
+            if (!_context.Releases.Any())
+            {
+                var releasesData = File.ReadAllText("SeedData/Releases.json");
+                var releases = JsonConvert.DeserializeObject<List<Release>>(releasesData);
+                foreach (var release in releases)
+                {
+                    _context.Releases.Add(release);
+                }
                 _context.SaveChanges();
             }
 
