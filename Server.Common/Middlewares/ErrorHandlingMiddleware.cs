@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Server.Common.Enums;
 using Server.Common.Errors;
 using Server.Common.Exceptions;
 using System;
@@ -49,6 +51,19 @@ namespace Server.Common.Middlewares
                             ContractResolver = new CamelCasePropertyNamesContractResolver()
                         });
                     break;
+                case DbUpdateException re:
+                    statusCode = (int)HttpStatusCode.BadRequest;
+                    responseBody = JsonConvert.SerializeObject(
+                        new RestErrorResponseDto(
+                            RestErrorCode.Duplicated, 
+                            context.Request.Path, 
+                            "An entry with the given value already exists."),
+                        new JsonSerializerSettings
+                        {
+                            ContractResolver = new CamelCasePropertyNamesContractResolver()
+                        });
+                    break;
+
                 default:
                     statusCode = (int)HttpStatusCode.InternalServerError;
                     responseBody = JsonConvert.SerializeObject(new RestErrorResponseDto(context.Request.Path, ex),

@@ -1,14 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Server.Data.Models.Releases
 {
     public class Release
     {
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Needs to be in the following format : Major.Minor.Build
-        /// </summary>
+        [Key]
         public string Version { get; set; }
 
         public ReleaseType Type { get; set; }

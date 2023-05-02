@@ -13,5 +13,6 @@
         Unauthorized,
         UserAlreadyExists,
         RemoteError,
+        Duplicated
     }
 }

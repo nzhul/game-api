@@ -111,9 +111,7 @@ namespace Server.Data.Migrations
                 name: "Releases",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Version = table.Column<string>(type: "text", nullable: true),
+                    Version = table.Column<string>(type: "text", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ReleaseNotes = table.Column<string>(type: "text", nullable: true),
@@ -122,7 +120,7 @@ namespace Server.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Releases", x => x.Id);
+                    table.PrimaryKey("PK_Releases", x => x.Version);
                 });
 
             migrationBuilder.CreateTable(

@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230430134650_init")]
+    [Migration("20230502093451_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -168,11 +168,8 @@ namespace Server.Data.Migrations
 
             modelBuilder.Entity("Server.Data.Models.Releases.Release", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("Version")
+                        .HasColumnType("text");
 
                     b.Property<string>("DownloadUrl")
                         .HasColumnType("text");
@@ -189,10 +186,7 @@ namespace Server.Data.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Version")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
+                    b.HasKey("Version");
 
                     b.ToTable("Releases");
                 });

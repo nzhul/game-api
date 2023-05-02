@@ -41,5 +41,9 @@ namespace Server.Common
         public static string UsernameValidationError =>
             $"The username must be between {MinUsernameLength} and {MaxUsernameLength} characters long" +
             @" and can contain only alphabetical letters.";
+
+        public static string VersionRegex = @"^\d{1,3}\.\d{1,3}\.\d{1,3}$";
+
+        public static string URLRegex = @"(https?://(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?://(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})";
     }
 }
