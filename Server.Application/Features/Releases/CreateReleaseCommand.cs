@@ -20,6 +20,10 @@ namespace Server.Application.Features.Releases
 
         public async Task Handle(CreateReleaseCommand request, CancellationToken cancellationToken)
         {
+            // TODO: Use System.Version.Parse(request.Version) to validate the version.
+            // https://stackoverflow.com/questions/7568147/compare-version-numbers-without-using-split-function
+            // TODO: Do not allow lower versions to be inserted in database.
+
             var release = new Release()
             {
                 Version = request.Version,
