@@ -35,19 +35,19 @@ jobs:
         push: true
         tags: nzhul/aw-api:latest
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   environment:
-  #     name: 'production'
-  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-  #   steps:
-  #   - name: Deploy to Azure Web App
-  #     id: deploy-to-webapp
-  #     uses: azure/webapps-deploy@v2
-  #     with:
-  #       app-name: 'aw-api'
-  #       slot-name: 'production'
-  #       publish-profile: ${{ secrets.AzureAppService_PublishProfile_cfdae24f9ad74582a9d901b94da243ae }}
-  #       images: 'nzhul/aw-api:latest'
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'aw-api'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_cfdae24f9ad74582a9d901b94da243ae }}
+        images: 'nzhul/aw-api:latest'
