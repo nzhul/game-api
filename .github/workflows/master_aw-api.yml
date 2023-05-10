@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_4940856419084ecc806312e418e7e834 }}/nzhul/aw-api:${{ github.sha }}
+        tags: nzhul/aw-api:latest
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'aw-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_cfdae24f9ad74582a9d901b94da243ae }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_4940856419084ecc806312e418e7e834 }}/nzhul/aw-api:${{ github.sha }}'
+        images: 'nzhul/aw-api:latest'
