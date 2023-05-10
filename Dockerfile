@@ -1,14 +1,16 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
-
-COPY ./Server.Api/*.csproj ./
+COPY . .
 RUN dotnet restore
+RUN dotnet publish -c Release -o out --no-restore
 
-COPY ./Server.Api ./
-RUN dotnet publish -c Release -o out
-
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+# Serve Stage
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 WORKDIR /app
-EXPOSE 80
-COPY --from=build-env /app/out .
-ENTRYPOINT [ "dotnet", "Server.Api.dll" ]
+COPY --from=build /app/out ./
+
+# Expose port 5000
+EXPOSE 5000
+
+# Run the app
+ENTRYPOINT ["dotnet", "Server.Api.dll"]
