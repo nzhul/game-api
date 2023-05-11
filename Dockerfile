@@ -9,8 +9,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/out ./
 
-# Expose port 8080
-EXPOSE 8080
+# Expose port 8000
+EXPOSE 8000
 
 # Run the app
 ENTRYPOINT ["dotnet", "Server.Api.dll"]
