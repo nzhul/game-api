@@ -50,4 +50,4 @@ jobs:
         app-name: 'aw-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_cfdae24f9ad74582a9d901b94da243ae }}
-        images: 'nzhul/aw-api:latest'
+        images: 'nzhul/aw-api'
