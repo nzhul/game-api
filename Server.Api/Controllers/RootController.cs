@@ -10,7 +10,7 @@ namespace Server.Api.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok("Server is running.");
+            return Ok("Server is running! (•_•) ( •_•)>⌐■-■ (⌐■_■)");
         }
     }
 }
