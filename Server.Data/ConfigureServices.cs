@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Data.Users;
+using System;
 
 namespace Server.Data
 {
@@ -10,7 +11,6 @@ namespace Server.Data
     {
         public static IServiceCollection AddDataServices(this IServiceCollection services, IConfiguration configuration)
         {
-
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
             {
                 opt.SignIn.RequireConfirmedEmail = false;
@@ -33,7 +33,21 @@ namespace Server.Data
 
             services.AddDbContext<DataContext>(opt =>
             {
-                opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+                var isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
+                var connectionString = string.Empty;
+
+                if (isDev)
+                {
+                    connectionString = configuration.GetConnectionString("DefaultConnection");
+                }
+                else
+                {
+                    connectionString = Environment.GetEnvironmentVariable("POSTGRESQLCONNSTR_DefaultConnection");
+                }
+
+                opt.UseNpgsql(connectionString);
+
             }, ServiceLifetime.Transient);
             return services;
         }
