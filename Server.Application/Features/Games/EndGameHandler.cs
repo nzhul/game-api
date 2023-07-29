@@ -7,10 +7,11 @@ namespace Server.Application.Features.Games
 {
     public class EndGameHandler : IRequestHandler<EndGameCommand>
     {
-        public Task Handle(EndGameCommand request, CancellationToken cancellationToken)
+        public async Task Handle(EndGameCommand request, CancellationToken cancellationToken)
         {
             // TODO: Add logging
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
+            return;
         }
     }
 

@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Server.Api.Controllers
 {
-    [Authorize(Policy = "RequireAdmin")]
+    //[Authorize(Policy = "RequireAdmin")]
+    [AllowAnonymous]
     [Route("unit-configurations")]
     public class UnitConfigurationsController : ControllerBase
     {
