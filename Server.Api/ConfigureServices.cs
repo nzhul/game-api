@@ -72,6 +72,9 @@ namespace Server.Api
             var basicCredentialsSection = configuration.GetSection(nameof(BasicCredentials));
             services.Configure<BasicCredentials>(basicCredentialsSection);
 
+            var globalSettings = configuration.GetSection(nameof(GlobalSettings));
+            services.Configure<GlobalSettings>(globalSettings);
+
             return services;
         }
     }
