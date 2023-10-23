@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230502093451_init")]
+    [Migration("20231023154450_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Server.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -288,6 +288,9 @@ namespace Server.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("OreCost")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RetaliationPoints")
                         .HasColumnType("integer");
 
                     b.Property<int>("Type")

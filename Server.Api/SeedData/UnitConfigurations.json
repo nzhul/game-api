@@ -11,7 +11,8 @@
     "UsesMana": true,
     "Armor": 3,
     "AttackType": "Hero",
-    "ArmorType": "Hero"
+    "ArmorType": "Hero",
+    "RetaliationPoints": 1
   },
   {
     "Type": "Shaman",
@@ -26,11 +27,12 @@
     "Armor": 0,
     "AttackType": "Magic",
     "ArmorType": "Unarmored",
-    "CreatureLevel": 5
+    "CreatureLevel": 5,
+    "RetaliationPoints": 1
   },
   {
     "Type": "Troll",
-    "MovementPoints": 1,
+    "MovementPoints": 6,
     "ActionPoints": 1,
     "MinDamage": 15,
     "MaxDamage": 20,
@@ -40,6 +42,7 @@
     "Armor": 2,
     "AttackType": "Normal",
     "ArmorType": "Heavy",
-    "CreatureLevel": 4
+    "CreatureLevel": 4,
+    "RetaliationPoints": 1
   }
 ]

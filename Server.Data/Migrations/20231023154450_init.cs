@@ -152,7 +152,8 @@ namespace Server.Data.Migrations
                     OreCost = table.Column<int>(type: "integer", nullable: false),
                     GoldCost = table.Column<int>(type: "integer", nullable: false),
                     GemsCost = table.Column<int>(type: "integer", nullable: false),
-                    FoodCost = table.Column<int>(type: "integer", nullable: false)
+                    FoodCost = table.Column<int>(type: "integer", nullable: false),
+                    RetaliationPoints = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

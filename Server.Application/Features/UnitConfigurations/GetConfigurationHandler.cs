@@ -96,5 +96,7 @@ namespace Server.Application.Features.UnitConfigurations
         public int GemsCost { get; set; }
 
         public int FoodCost { get; set; }
+
+        public int RetaliationPoints { get; set; }
     }
 }

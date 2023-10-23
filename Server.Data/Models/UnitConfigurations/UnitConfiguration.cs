@@ -68,6 +68,8 @@ namespace Server.Data.UnitConfigurations
 
         public int FoodCost { get; set; }
 
+        public int RetaliationPoints { get; set; }
+
         public virtual ICollection<Ability> Abilities { get; set; }
 
         public virtual ICollection<Upgrade> Upgrades { get; set; }
