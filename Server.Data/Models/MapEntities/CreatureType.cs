@@ -5,29 +5,42 @@
         // Underworld
         Spider,
         Bat,
-        Hound,
-        Troll,
-        Shaman,
+        QuillBeast,
+        Stinger,
+        Occultist,
         Worm,
         Demon,
 
         // Human
-        Swordsman,
+        Slave,
         Bowman,
-        DireWolf,
+        Balista,
         Priest,
-        Mage,
-        Knight,
-        Ancestor,
+        Engineer,
+        Scholar,
+        DrillEngine,
 
         // Sanctuary Heroes
-        Paladin,
-        Mercenary,
-        Sorcerer,
+        Zealot,
+        Assassin,
+        Architect,
 
         // Underworld Heroes
+        EmberKing,
         Warlord,
-        Witch,
-        Warg
+        Witch
+    }
+
+    public static class CreatureTypeExtensions
+    {
+        public static bool IsHero(this CreatureType type)
+        {
+            return type == CreatureType.Zealot ||
+                   type == CreatureType.Assassin ||
+                   type == CreatureType.Architect ||
+                   type == CreatureType.EmberKing ||
+                   type == CreatureType.Warlord ||
+                   type == CreatureType.Witch;
+        }
     }
 }

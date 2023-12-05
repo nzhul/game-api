@@ -23,9 +23,9 @@ namespace Server.Data
             List<Ability> allAbilities = new List<Ability>();
             Dictionary<CreatureType, List<string>> creatureAbilitiesConfig = new Dictionary<CreatureType, List<string>>()
             {
-                { CreatureType.Paladin, new List<string>(){ "PLD_VS", "PLD_HOJ", "PLD_BL" } },
-                { CreatureType.Shaman, new List<string>(){ "RA" } },
-                { CreatureType.Troll, new List<string>(){ "NA" } }
+                { CreatureType.Zealot, new List<string>(){ "ZLT_VS", "ZLT_HOJ", "ZLT_BL" } },
+                { CreatureType.Occultist, new List<string>(){ "RA" } },
+                { CreatureType.Stinger, new List<string>(){ "NA" } }
             };
 
             if (!_context.Users.Any())
