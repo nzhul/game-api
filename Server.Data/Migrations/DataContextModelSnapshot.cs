@@ -230,9 +230,6 @@ namespace Server.Data.Migrations
                     b.Property<int>("Armor")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ArmorIncrement")
-                        .HasColumnType("integer");
-
                     b.Property<int>("ArmorType")
                         .HasColumnType("integer");
 
@@ -242,8 +239,11 @@ namespace Server.Data.Migrations
                     b.Property<int>("BuildTime")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Evasion")
+                    b.Property<int>("Dexterity")
                         .HasColumnType("integer");
+
+                    b.Property<float>("DexterityGain")
+                        .HasColumnType("real");
 
                     b.Property<int>("Faction")
                         .HasColumnType("integer");
@@ -260,31 +260,37 @@ namespace Server.Data.Migrations
                     b.Property<int>("Hitpoints")
                         .HasColumnType("integer");
 
-                    b.Property<int>("HitpointsIncrement")
+                    b.Property<int>("Knowledge")
+                        .HasColumnType("integer");
+
+                    b.Property<float>("KnowledgeGain")
+                        .HasColumnType("real");
+
+                    b.Property<int>("MagicResist")
                         .HasColumnType("integer");
 
                     b.Property<int>("Mana")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ManaIncrement")
-                        .HasColumnType("integer");
-
                     b.Property<int>("MaxDamage")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MaxDamageIncrement")
+                    b.Property<int>("Might")
                         .HasColumnType("integer");
+
+                    b.Property<float>("MightGain")
+                        .HasColumnType("real");
 
                     b.Property<int>("MinDamage")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MinDamageIncrement")
                         .HasColumnType("integer");
 
                     b.Property<int>("MovementPoints")
                         .HasColumnType("integer");
 
                     b.Property<int>("OreCost")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PrimaryAttribute")
                         .HasColumnType("integer");
 
                     b.Property<int>("RetaliationPoints")

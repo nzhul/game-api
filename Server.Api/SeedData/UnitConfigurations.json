@@ -1,6 +1,7 @@
 [
   {
-    "Type": "Paladin",
+    "Type": "Zealot",
+    "PrimaryAttribute": "Might",
     "Faction": "Sanctuary",
     "MovementPoints": 4,
     "ActionPoints": 2,
@@ -12,10 +13,19 @@
     "Armor": 3,
     "AttackType": "Hero",
     "ArmorType": "Hero",
-    "RetaliationPoints": 1
+    "RetaliationPoints": 1,
+    "StartingLevel": 1,
+    "MagicResist": 20,
+    "Might": 25,
+    "MightGain": 2.8,
+    "Dexterity": 20,
+    "DexterityGain": 1.7,
+    "Knowledge": 18,
+    "KnowledgeGain": 1.7
   },
   {
-    "Type": "Shaman",
+    "Type": "Occultist",
+    "PrimaryAttribute": "Knowledge",
     "Faction": "Underworld",
     "MovementPoints": 4,
     "ActionPoints": 1,
@@ -31,7 +41,8 @@
     "RetaliationPoints": 1
   },
   {
-    "Type": "Troll",
+    "Type": "Stinger",
+    "PrimaryAttribute": "Dexterity",
     "MovementPoints": 6,
     "ActionPoints": 1,
     "MinDamage": 15,
@@ -43,6 +54,6 @@
     "AttackType": "Normal",
     "ArmorType": "Heavy",
     "CreatureLevel": 4,
-    "RetaliationPoints": 1
+    "RetaliationPoints": 1,
   }
 ]
