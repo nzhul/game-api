@@ -4,6 +4,7 @@ using MediatR;
 using Server.Common.Mappings;
 using Server.Data;
 using Server.Data.MapEntities;
+using Server.Data.Models.MapEntities;
 using Server.Data.UnitConfigurations;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,8 @@ namespace Server.Application.Features.UnitConfigurations
 
         public CreatureType Type { get; set; }
 
+        public Attribute PrimaryAttribute { get; set; }
+
         public Faction Faction { get; set; }
 
         public int MovementPoints { get; set; }
@@ -79,11 +82,23 @@ namespace Server.Application.Features.UnitConfigurations
 
         public int Armor { get; set; }
 
+        public int MagicResist { get; set; }
+
+        public int Might { get; set; }
+
+        public float MightGain { get; set; }
+
+        public int Dexterity { get; set; }
+
+        public float DexterityGain { get; set; }
+
+        public int Knowledge { get; set; }
+
+        public float KnowledgeGain { get; set; }
+
         public AttackType AttackType { get; set; }
 
         public ArmorType ArmorType { get; set; }
-
-        public int CreatureLevel { get; set; }
 
         public int BuildTime { get; set; }
 

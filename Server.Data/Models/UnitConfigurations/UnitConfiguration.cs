@@ -1,4 +1,5 @@
 ﻿using Server.Data.MapEntities;
+using Server.Data.Models.MapEntities;
 using System.Collections.Generic;
 
 namespace Server.Data.UnitConfigurations
@@ -22,6 +23,8 @@ namespace Server.Data.UnitConfigurations
 
         public CreatureType Type { get; set; }
 
+        public Attribute PrimaryAttribute { get; set; }
+
         public Faction Faction { get; set; }
 
         public int MovementPoints { get; set; }
@@ -30,31 +33,41 @@ namespace Server.Data.UnitConfigurations
 
         public int MinDamage { get; set; }
 
-        public int MinDamageIncrement { get; set; }
-
         public int MaxDamage { get; set; }
 
-        public int MaxDamageIncrement { get; set; }
-
         public int Hitpoints { get; set; }
-
-        public int HitpointsIncrement { get; set; }
 
         public int Mana { get; set; }
 
         public bool UsesMana { get; set; }
 
-        public int ManaIncrement { get; set; }
-
         public int Armor { get; set; }
 
-        public int ArmorIncrement { get; set; }
+        /// <summary>
+        /// Represents the Raw value. It is later on used to calculate percentage.
+        /// </summary>
+        public int MagicResist { get; set; }
 
-        public int Evasion { get; set; }
+        public int Might { get; set; }
 
+        public float MightGain { get; set; }
+
+        public int Dexterity { get; set; }
+
+        public float DexterityGain { get; set; }
+
+        public int Knowledge { get; set; }
+
+        public float KnowledgeGain { get; set; }
+
+        // Thing about if I will use this or I will use the Physical/Magic/Pure... damage types.
+        // This allows for simplified game mechanic > Rock-Paper-Scissors.
+        // Without this - all units will feel the same.
         public AttackType AttackType { get; set; }
 
         public ArmorType ArmorType { get; set; }
+
+        // ---------- COSTS ----------
 
         public int BuildTime { get; set; }
 
