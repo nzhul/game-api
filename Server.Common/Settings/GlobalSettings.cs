@@ -11,10 +11,10 @@
 
         public BattleSettings Battle { get; set; }
 
-        public Attributes Attributes { get; set; }
+        public StatConstants StatConstants { get; set; }
     }
 
-    public class Attributes
+    public class StatConstants
     {
         public int HPPerMight { get; set; } // 22
 
