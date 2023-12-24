@@ -4,28 +4,27 @@
     {
         /// <summary>
         /// Most melee units
-        /// Normal attacks do extra damage against Medium armor, and reduced damage to Fortified armor.
+        /// Slashing attacks do extra damage against Light armor, and reduced damage to Bastion armor.
         /// </summary>
-        Normal,
+        Slashing,
 
         /// <summary>
         /// Most ranged attackers
-        /// Piercing attacks do extra damage to Unarmored units and Light armor, and reduced damage to Fortified, Medium armor, and Heroes.
+        /// Piercing attacks do extra damage to Unarmored units, and reduced damage to Heavy and Bastion armor.
         /// </summary>
         Piercing,
 
         /// <summary>
         /// Most siege units
-        /// Siege attacks do extra damage to Fortified armor and Unarmored units, and reduced damage to Medium armor and Heroes.
+        /// Blunt attacks do extra damage to Bastion armor and Unarmored units, and reduced damage to Light armor.
         /// </summary>
-        Siege,
+        Blunt,
 
         /// <summary>
         /// Most spellcasters
-        /// Magic attacks do extra damage against Light and Heavy armor, and reduced damage to Medium, Fortified armor, and Heroes. 
-        /// Magic attacks do 66% extra damage to ethereal units, and zero damage to magic-immune units.
+        /// Arcane attacks do extra damage against Heavy armor, and reduced damage to Light and Bastion armor.
+        /// Arcane attacks do zero damage to magic-immune units.
         /// </summary>
-        Magic,
-        Hero
+        Arcane,
     }
 }

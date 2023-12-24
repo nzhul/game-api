@@ -239,6 +239,9 @@ namespace Server.Data.Migrations
                     b.Property<int>("BuildTime")
                         .HasColumnType("integer");
 
+                    b.Property<int>("CreatureLevel")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Dexterity")
                         .HasColumnType("integer");
 

@@ -149,6 +149,7 @@ namespace Server.Data.Migrations
                     KnowledgeGain = table.Column<float>(type: "real", nullable: false),
                     AttackType = table.Column<int>(type: "integer", nullable: false),
                     ArmorType = table.Column<int>(type: "integer", nullable: false),
+                    CreatureLevel = table.Column<int>(type: "integer", nullable: false),
                     BuildTime = table.Column<int>(type: "integer", nullable: false),
                     WoodCost = table.Column<int>(type: "integer", nullable: false),
                     OreCost = table.Column<int>(type: "integer", nullable: false),

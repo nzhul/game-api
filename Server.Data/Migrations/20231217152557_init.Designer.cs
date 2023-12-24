@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231206204403_init")]
+    [Migration("20231217152557_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -240,6 +240,9 @@ namespace Server.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("BuildTime")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CreatureLevel")
                         .HasColumnType("integer");
 
                     b.Property<int>("Dexterity")

@@ -67,6 +67,8 @@ namespace Server.Data.UnitConfigurations
 
         public ArmorType ArmorType { get; set; }
 
+        public int CreatureLevel { get; set; }
+
         // ---------- COSTS ----------
 
         public int BuildTime { get; set; }

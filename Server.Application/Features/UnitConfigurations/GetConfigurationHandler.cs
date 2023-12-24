@@ -100,6 +100,8 @@ namespace Server.Application.Features.UnitConfigurations
 
         public ArmorType ArmorType { get; set; }
 
+        public int CreatureLevel { get; set; }
+
         public int BuildTime { get; set; }
 
         public int WoodCost { get; set; }

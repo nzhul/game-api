@@ -4,37 +4,26 @@
     {
         /// <summary>
         /// Most spellcasters
-        /// Unarmored takes extra damage from Piercing, and Siege attacks. 
+        /// Unarmored takes extra damage from Piercing, and Blunt attacks.
         /// </summary>
         Unarmored,
 
         /// <summary>
-        /// Most flying units
-        /// Light armor takes extra damage from Piercing and Magic attacks.
+        /// Most ranged attackers
+        /// Light armor takes extra damage from Slashing attacks, reduces damage from Piercing, Arcane, and Blunt attacks.
         /// </summary>
         Light,
 
         /// <summary>
-        /// Most ranged attackers
-        /// Medium armor takes extra damage from Normal attacks, reduces damage from Piercing, Magic, and Siege attacks.
-        /// </summary>
-        Medium,
-
-        /// <summary>
         /// Most melee units
-        /// Heavy armor takes extra damage from Magic attacks.
+        /// Heavy armor takes extra damage from Arcane attacks.
         /// </summary>
         Heavy,
 
         /// <summary>
-        /// Heroes take reduced damage from Piercing, Magic, Spell, and Siege attacks.
-        /// </summary>
-        Hero,
-
-        /// <summary>
         /// Special siege units or In-Battle buildings (Ex: Towers).
-        /// Fortified armor greatly reduces Piercing, Magic, Hero, and Normal attacks, but takes extra damage from Siege attacks.
+        /// Bastion armor greatly reduces Piercing, Arcane, and Slashing attacks, but takes extra damage from Blunt attacks.
         /// </summary>
-        Fortified
+        Bastion
     }
 }

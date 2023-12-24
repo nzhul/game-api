@@ -11,8 +11,8 @@
     "Mana": 50,
     "UsesMana": true,
     "Armor": 3,
-    "AttackType": "Hero",
-    "ArmorType": "Hero",
+    "AttackType": "Slashing",
+    "ArmorType": "Heavy",
     "RetaliationPoints": 1,
     "StartingLevel": 1,
     "MagicResist": 20,
@@ -35,7 +35,7 @@
     "Mana": 20,
     "UsesMana": true,
     "Armor": 0,
-    "AttackType": "Magic",
+    "AttackType": "Arcane",
     "ArmorType": "Unarmored",
     "CreatureLevel": 5,
     "RetaliationPoints": 1
@@ -51,9 +51,9 @@
     "Mana": 0,
     "UsesMana": false,
     "Armor": 2,
-    "AttackType": "Normal",
+    "AttackType": "Slashing",
     "ArmorType": "Heavy",
     "CreatureLevel": 4,
-    "RetaliationPoints": 1,
+    "RetaliationPoints": 1
   }
 ]
