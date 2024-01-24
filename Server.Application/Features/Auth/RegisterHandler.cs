@@ -23,8 +23,8 @@ namespace Server.Application.Features.Auth
         private readonly ILogger<RegisterHandler> _logger;
 
         public RegisterHandler(
-            UserManager<User> userManager, 
-            IMapper mapper, 
+            UserManager<User> userManager,
+            IMapper mapper,
             ILogger<RegisterHandler> logger)
         {
             _mapper = mapper;

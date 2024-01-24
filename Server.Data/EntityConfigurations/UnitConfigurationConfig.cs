@@ -21,6 +21,27 @@ namespace Server.Data.EntityConfigurations
                 .HasMany(x => x.Upgrades)
                 .WithMany(x => x.UnitConfigurations)
                 .UsingEntity(x => x.ToTable("UnitConfigurationUpgrades"));
+
+            // TODO: This can be generic.
+            builder
+                .Property(x => x.Type)
+                .HasConversion<string>();
+
+            builder
+                .Property(x => x.PrimaryAttribute)
+                .HasConversion<string>();
+
+            builder
+                .Property(x => x.Faction)
+                .HasConversion<string>();
+
+            builder
+                .Property(x => x.AttackType)
+                .HasConversion<string>();
+
+            builder
+                .Property(x => x.ArmorType)
+                .HasConversion<string>();
         }
     }
 }

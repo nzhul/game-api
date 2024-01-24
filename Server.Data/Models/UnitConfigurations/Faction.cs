@@ -2,6 +2,7 @@
 {
     public enum Faction
     {
+        Neutral,
         Sanctuary,
         Underworld
     }

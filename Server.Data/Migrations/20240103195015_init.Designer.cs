@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231217152557_init")]
+    [Migration("20240103195015_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -233,11 +233,13 @@ namespace Server.Data.Migrations
                     b.Property<int>("Armor")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ArmorType")
-                        .HasColumnType("integer");
+                    b.Property<string>("ArmorType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("AttackType")
-                        .HasColumnType("integer");
+                    b.Property<string>("AttackType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("BuildTime")
                         .HasColumnType("integer");
@@ -251,8 +253,9 @@ namespace Server.Data.Migrations
                     b.Property<float>("DexterityGain")
                         .HasColumnType("real");
 
-                    b.Property<int>("Faction")
-                        .HasColumnType("integer");
+                    b.Property<string>("Faction")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("FoodCost")
                         .HasColumnType("integer");
@@ -296,14 +299,16 @@ namespace Server.Data.Migrations
                     b.Property<int>("OreCost")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PrimaryAttribute")
-                        .HasColumnType("integer");
+                    b.Property<string>("PrimaryAttribute")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("RetaliationPoints")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("UsesMana")
                         .HasColumnType("boolean");

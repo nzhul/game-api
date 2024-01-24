@@ -55,8 +55,8 @@ namespace Server.Common.Middlewares
                     statusCode = (int)HttpStatusCode.BadRequest;
                     responseBody = JsonConvert.SerializeObject(
                         new RestErrorResponseDto(
-                            RestErrorCode.Duplicated, 
-                            context.Request.Path, 
+                            RestErrorCode.Duplicated,
+                            context.Request.Path,
                             "An entry with the given value already exists."),
                         new JsonSerializerSettings
                         {

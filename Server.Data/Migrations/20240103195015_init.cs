@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using System;
 
 #nullable disable
 
@@ -129,9 +129,9 @@ namespace Server.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    PrimaryAttribute = table.Column<int>(type: "integer", nullable: false),
-                    Faction = table.Column<int>(type: "integer", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    PrimaryAttribute = table.Column<string>(type: "text", nullable: false),
+                    Faction = table.Column<string>(type: "text", nullable: false),
                     MovementPoints = table.Column<int>(type: "integer", nullable: false),
                     ActionPoints = table.Column<int>(type: "integer", nullable: false),
                     MinDamage = table.Column<int>(type: "integer", nullable: false),
@@ -147,8 +147,8 @@ namespace Server.Data.Migrations
                     DexterityGain = table.Column<float>(type: "real", nullable: false),
                     Knowledge = table.Column<int>(type: "integer", nullable: false),
                     KnowledgeGain = table.Column<float>(type: "real", nullable: false),
-                    AttackType = table.Column<int>(type: "integer", nullable: false),
-                    ArmorType = table.Column<int>(type: "integer", nullable: false),
+                    AttackType = table.Column<string>(type: "text", nullable: false),
+                    ArmorType = table.Column<string>(type: "text", nullable: false),
                     CreatureLevel = table.Column<int>(type: "integer", nullable: false),
                     BuildTime = table.Column<int>(type: "integer", nullable: false),
                     WoodCost = table.Column<int>(type: "integer", nullable: false),
