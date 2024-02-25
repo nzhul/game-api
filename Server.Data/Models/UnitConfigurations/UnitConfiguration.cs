@@ -29,6 +29,8 @@ namespace Server.Data.UnitConfigurations
 
         public int MovementPoints { get; set; }
 
+        public int WorldMovementPoints { get; set; }
+
         public int ActionPoints { get; set; }
 
         public int MinDamage { get; set; }

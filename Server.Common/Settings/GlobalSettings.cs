@@ -2,8 +2,6 @@
 {
     public class GlobalSettings
     {
-        public int ArmyMovementPoints { get; set; }
-
         /// <summary>
         /// In seconds.
         /// </summary>

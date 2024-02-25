@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using System;
 
 #nullable disable
 
@@ -133,6 +133,7 @@ namespace Server.Data.Migrations
                     PrimaryAttribute = table.Column<string>(type: "text", nullable: false),
                     Faction = table.Column<string>(type: "text", nullable: false),
                     MovementPoints = table.Column<int>(type: "integer", nullable: false),
+                    WorldMovementPoints = table.Column<int>(type: "integer", nullable: false),
                     ActionPoints = table.Column<int>(type: "integer", nullable: false),
                     MinDamage = table.Column<int>(type: "integer", nullable: false),
                     MaxDamage = table.Column<int>(type: "integer", nullable: false),

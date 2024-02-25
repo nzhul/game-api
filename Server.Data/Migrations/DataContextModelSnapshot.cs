@@ -313,6 +313,9 @@ namespace Server.Data.Migrations
                     b.Property<int>("WoodCost")
                         .HasColumnType("integer");
 
+                    b.Property<int>("WorldMovementPoints")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Type")

@@ -12,7 +12,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240103195015_init")]
+    [Migration("20240208213107_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -314,6 +314,9 @@ namespace Server.Data.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<int>("WoodCost")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WorldMovementPoints")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
